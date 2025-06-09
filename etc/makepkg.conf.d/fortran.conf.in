@@ -1,6 +1,6 @@
 #!/hint/bash
 #
-# @sysconfdir@/makepkg.conf.d/fortran.conf
+# @sysconfdir@/ps4mkpkg.conf.d/fortran.conf
 #
 
 #########################################################################

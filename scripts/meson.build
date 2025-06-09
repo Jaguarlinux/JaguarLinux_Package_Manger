@@ -1,12 +1,12 @@
 wrapped_scripts = [
-  'makepkg.sh.in',
-  'pacman-db-upgrade.sh.in',
-  'pacman-key.sh.in',
+  'ps4mkpkg.sh.in',
+  'ps4db-upgrade.sh.in',
+  'ps4-keygen.sh.in',
   'repo-add.sh.in'
 ]
 
 scripts = [
-  'makepkg-template.pl.in',
+  'ps4makepkg-template.pl.in',
 ]
 
 SCRIPT_EDITOR = find_program(configure_file(
@@ -64,7 +64,7 @@ subdir('libmakepkg')
 
 configure_file(
 	configuration : { 'libmakepkgdir': LIBMAKEPKGDIR, 'PACKAGE_VERSION': PACKAGE_VERSION },
-	input : 'libmakepkg.pc.in',
+	input : 'ps4makepkg.pc.in',
 	output : '@BASENAME@',
 	install_dir : join_paths(DATAROOTDIR, 'pkgconfig'))
 
@@ -72,13 +72,13 @@ custom_target(
   'bash_completion',
   command : [ SCRIPT_EDITOR, '@INPUT@', '@OUTPUT@' ],
   input : 'completion/bash_completion.in',
-  output : 'pacman',
+  output : 'ps4',
   install : true,
   install_dir : BASHCOMPDIR)
 
-foreach symlink : ['pacman-key', 'makepkg']
+foreach symlink : ['ps4-keygen', 'ps4mkpkg']
   meson.add_install_script(MESON_MAKE_SYMLINK,
-                           'pacman',
+                           'ps4',
                            join_paths(BASHCOMPDIR, symlink))
 endforeach
 
@@ -87,6 +87,6 @@ custom_target(
   'zsh_completion',
   command : [ SCRIPT_EDITOR, '@INPUT@', '@OUTPUT@' ],
   input : 'completion/zsh_completion.in',
-  output : '_pacman',
+  output : '_ps4',
   install : true,
   install_dir : zsh_completion_dir)

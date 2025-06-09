@@ -1,13 +1,13 @@
 #!/hint/bash
 #
-# @sysconfdir@/makepkg.conf
+# @sysconfdir@/ps4mkpkg.conf
 #
 
 #########################################################################
 # SOURCE ACQUISITION
 #########################################################################
 #
-#-- The download utilities that makepkg should use to acquire sources
+#-- The download utilities that ps4mkpkg should use to acquire sources
 #  Format: 'protocol::agent'
 DLAGENTS=('file::/usr/bin/curl -qgC - -o %o %u'
           'ftp::/usr/bin/curl -qgfC - --ftp-pasv --retry 3 --retry-delay 3 -o %o %u'
@@ -21,7 +21,7 @@ DLAGENTS=('file::/usr/bin/curl -qgC - -o %o %u'
 # /usr/bin/lftpget -c
 # /usr/bin/wget
 
-#-- The package required by makepkg to download VCS sources
+#-- The package required by ps4mkpkg to download VCS sources
 #  Format: 'protocol::package'
 VCSCLIENTS=('bzr::breezy'
             'fossil::fossil'
@@ -54,7 +54,7 @@ CHOST="@CHOST@"
 # BUILD ENVIRONMENT
 #########################################################################
 #
-# Makepkg defaults: BUILDENV=(!distcc !color !ccache check !sign)
+# Ps4mkpkg defaults: BUILDENV=(!distcc !color !ccache check !sign)
 #  A negated environment option will do the opposite of the comments below.
 #
 #-- distcc:   Use the Distributed C/C++/ObjC compiler
@@ -70,14 +70,14 @@ BUILDENV=(!distcc color !ccache check !sign)
 #DISTCC_HOSTS=""
 #
 #-- Specify a directory for package building.
-#BUILDDIR=/tmp/makepkg
+#BUILDDIR=/tmp/ps4mkpkg
 
 #########################################################################
 # GLOBAL PACKAGE OPTIONS
 #   These are default values for the options=() settings
 #########################################################################
 #
-# Makepkg defaults:
+# ps4mkpkg defaults:
 # OPTIONS=(!strip docs libtool staticlibs emptydirs !zipman !purge !debug !lto !autodeps)
 #  A negated option will do the opposite of the comments below.
 #
@@ -126,7 +126,7 @@ LIB_DIRS=('lib:usr/lib' 'lib32:usr/lib32')
 #-- Source packages: specify a fixed directory where all src packages will be placed
 #SRCPKGDEST=/home/srcpackages
 #-- Log files: specify a fixed directory where all log files will be placed
-#LOGDEST=/home/makepkglogs
+#LOGDEST=/home/ps4mkpkglogs
 #-- Packager: name/email of the person or organization building packages
 #PACKAGER="John Doe <john@doe.com>"
 #-- Specify a key to use for package signing
@@ -157,5 +157,5 @@ SRCEXT='@SRCEXT@'
 # OTHER
 #########################################################################
 #
-#-- Command used to run pacman as root, instead of trying sudo and su
-PACMAN_AUTH=()
+#-- Command used to run ps4 as root, instead of trying sudo and su
+PS4_AUTH=()

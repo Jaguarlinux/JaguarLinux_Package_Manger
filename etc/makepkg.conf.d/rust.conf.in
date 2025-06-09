@@ -1,6 +1,6 @@
 #!/hint/bash
 #
-# @sysconfdir@/makepkg.conf.d/rust.conf
+# @sysconfdir@/ps4mkpkg.conf.d/rust.conf
 #
 
 #########################################################################
