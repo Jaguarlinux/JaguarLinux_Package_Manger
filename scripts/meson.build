@@ -6,7 +6,7 @@ wrapped_scripts = [
 ]
 
 scripts = [
-  'ps4makepkg-template.pl.in',
+  'ps4makpkg-template.pl.in',
 ]
 
 SCRIPT_EDITOR = find_program(configure_file(
@@ -60,11 +60,11 @@ foreach symlink : ['repo-remove', 'repo-elephant']
   script_wrappers += [[ symlink, internal_script, meson.current_build_dir() ]]
 endforeach
 
-subdir('libmakepkg')
+subdir('libps4mkpkg')
 
 configure_file(
-	configuration : { 'libmakepkgdir': LIBMAKEPKGDIR, 'PACKAGE_VERSION': PACKAGE_VERSION },
-	input : 'ps4makepkg.pc.in',
+	configuration : { 'libps4mkpkgdir': LIBPS4MKPKGDIR, 'PACKAGE_VERSION': PACKAGE_VERSION },
+	input : 'ps4makpkg.pc.in',
 	output : '@BASENAME@',
 	install_dir : join_paths(DATAROOTDIR, 'pkgconfig'))
 

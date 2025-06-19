@@ -1,9 +1,9 @@
 /*
- *  vercmp.c - Compare package version numbers using pacman's version
+ *  vercmp.c - Compare package version numbers using ps4's version
  *      comparison logic
  *
- *  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
- *  Copyright (c) 2002-2005 by Judd Vinet <jvinet@zeroflux.org>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,8 +29,8 @@ int alpm_pkg_vercmp(const char *a, const char *b);
 
 static void usage(void)
 {
-	fprintf(stderr, "vercmp (pacman) v" PACKAGE_VERSION "\n\n"
-		"Compare package version numbers using pacman's version comparison logic.\n\n"
+	fprintf(stderr, "vercmp (ps4) v" PACKAGE_VERSION "\n\n"
+		"Compare package version numbers using ps4's version comparison logic.\n\n"
 		"Usage: vercmp <ver1> <ver2>\n\n"
 		"Output values:\n"
 		"  < 0 : if ver1 < ver2\n"

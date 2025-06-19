@@ -29,8 +29,8 @@
 #include <alpm.h>
 #include <alpm_list.h>
 
-/* pacman */
-#include "pacman.h"
+/* ps4 */
+#include "ps4.h"
 #include "package.h"
 #include "check.h"
 #include "conf.h"
@@ -333,7 +333,7 @@ static int display(alpm_pkg_t *pkg)
 				alpm_pkg_t *newpkg = alpm_sync_get_new_version(pkg, alpm_get_syncdbs(config->handle));
 				alpm_db_t *db = alpm_pkg_get_db(newpkg);
 				alpm_db_get_usage(db, &usage);
-				
+
 				printf(" -> %s%s%s", colstr->version, alpm_pkg_get_version(newpkg), colstr->nocolor);
 
 				if(alpm_pkg_should_ignore(config->handle, pkg) || !(usage & ALPM_DB_USAGE_UPGRADE)) {
@@ -396,7 +396,7 @@ static int query_group(alpm_list_t *targets)
 	return ret;
 }
 
-int pacman_query(alpm_list_t *targets)
+int ps4_query(alpm_list_t *targets)
 {
 	int ret = 0;
 	int match = 0;

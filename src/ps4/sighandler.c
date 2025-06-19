@@ -63,7 +63,7 @@ static void soft_interrupt_handler(int signum)
 	xwrite(STDOUT_FILENO, CURSOR_SHOW_ANSICODE,
 		sizeof(CURSOR_SHOW_ANSICODE) - 1);
 	if(alpm_trans_interrupt(config->handle) == 0) {
-		/* a transaction is being interrupted, don't exit pacman yet. */
+		/* a transaction is being interrupted, don't exit ps4 yet. */
 		return;
 	}
 	alpm_unlock(config->handle);

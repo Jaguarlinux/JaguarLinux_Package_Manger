@@ -1,14 +1,9 @@
 #!/bin/bash
 #
-#   makepkg - make packages compatible for use with pacman
+#   ps4mkpkg - make packages compatible for use with ps4
 #
-#   Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
-#   Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
-#   Copyright (c) 2005 by Aurelien Foret <orelien@chez.com>
-#   Copyright (c) 2006 by Miklos Vajna <vmiklos@frugalware.org>
-#   Copyright (c) 2005 by Christian Hamar <krics@linuxforum.hu>
-#   Copyright (c) 2006 by Alex Smith <alex@alex-smith.me.uk>
-#   Copyright (c) 2006 by Andras Voroskoi <voroskoi@frugalware.org>
+#   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+#   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -24,13 +19,13 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# makepkg uses quite a few external programs during its execution. You
-# need to have at least the following installed for makepkg to function:
+# ps4mkpkg uses quite a few external programs during its execution. You
+# need to have at least the following installed for ps4mkpkg to function:
 #   awk, bsdtar (libarchive), bzip2, coreutils, fakeroot, file, find (findutils),
 #   gettext, gpg, grep, gzip, sed, tput (ncurses), xz
 
 # gettext initialization
-export TEXTDOMAIN='pacman-scripts'
+export TEXTDOMAIN='ps4-scripts'
 export TEXTDOMAINDIR='@localedir@'
 
 # file -i does not work on Mac OSX unless legacy mode is set
@@ -40,11 +35,11 @@ unset CDPATH
 # Ensure GREP_OPTIONS doesn't screw with our grep calls
 unset GREP_OPTIONS
 
-declare -r makepkg_version='@PACKAGE_VERSION@'
+declare -r ps4mkpkg_version='@PACKAGE_VERSION@'
 declare -r confdir='@sysconfdir@'
 declare -r BUILDSCRIPT='@BUILDSCRIPT@'
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
 # Options
 ASDEPS=0
@@ -80,16 +75,16 @@ SPLITPKG=0
 SOURCEONLY=0
 VERIFYSOURCE=0
 
-MAKEPKG_LINT_PKGBUILD=${MAKEPKG_LINT_PKGBUILD:-1}
+PS4MKPKG_LINT_PS4BUILD=${PS4MKPKG_LINT_PS4BUILD:-1}
 
-PACMAN_OPTS=()
+PS4_OPTS=()
 
 shopt -s extglob
 
 ### SUBROUTINES ###
 
-# Import libmakepkg
-for lib in "$MAKEPKG_LIBRARY"/*.sh; do
+# Import libps4mkpkg
+for lib in "$PS4MKPKG_LIBRARY"/*.sh; do
 	source "$lib"
 done
 
@@ -186,7 +181,7 @@ enter_fakeroot() {
 }
 
 # Automatically update pkgver variable if a pkgver() function is provided
-# Re-sources the PKGBUILD afterwards to allow for other variables that use $pkgver
+# Re-sources the PS4PKGBUILD afterwards to allow for other variables that use $pkgver
 update_pkgver() {
 	msg "$(gettext "Starting %s()...")" "pkgver"
 	newpkgver=$(run_function_safe pkgver)
@@ -195,7 +190,7 @@ update_pkgver() {
 	fi
 	if ! check_pkgver "$newpkgver"; then
 		error "$(gettext "pkgver() generated an invalid version: %s")" "$newpkgver"
-		exit $E_PKGBUILD_ERROR
+		exit $E_PS4PKGBUILD_ERROR
 	fi
 
 	if [[ -n $newpkgver && $newpkgver != "$pkgver" ]]; then
@@ -206,7 +201,7 @@ update_pkgver() {
 			if ! printf '%s\n' "${buildfile[@]}" > "$BUILDFILE"; then
 				error "$(gettext "Failed to update %s from %s to %s")" \
 						"pkgver" "$pkgver" "$newpkgver"
-				exit $E_PKGBUILD_ERROR
+				exit $E_PS4PKGBUILD_ERROR
 			fi
 			source_safe "$BUILDFILE"
 			local fullver=$(get_full_version)
@@ -218,35 +213,35 @@ update_pkgver() {
 	fi
 }
 
-# Print 'source not found' error message and exit makepkg
+# Print 'source not found' error message and exit ps4mkpkg
 missing_source_file() {
 	error "$(gettext "Unable to find source file %s.")" "$(get_filename "$1")"
 	plainerr "$(gettext "Aborting...")"
 	exit $E_MISSING_FILE
 }
 
-run_pacman() {
+run_ps4() {
 	local cmd cmdescape
 	if [[ $1 = -@(T|Q)*([[:alpha:]]) ]]; then
-		cmd=("$PACMAN_PATH" "$@")
+		cmd=("$PS4_PATH" "$@")
 	else
-		cmd=("$PACMAN_PATH" "${PACMAN_OPTS[@]}" "$@")
+		cmd=("$PS4_PATH" "${PS4_OPTS[@]}" "$@")
 		cmdescape="$(printf '%q ' "${cmd[@]}")"
-		if (( ${#PACMAN_AUTH[@]} )); then
-			if in_array '%c' "${PACMAN_AUTH[@]}"; then
-				cmd=("${PACMAN_AUTH[@]/\%c/$cmdescape}")
+		if (( ${#PS4_AUTH[@]} )); then
+			if in_array '%c' "${PS4_AUTH[@]}"; then
+				cmd=("${PS4_AUTH[@]/\%c/$cmdescape}")
 			else
-				cmd=("${PACMAN_AUTH[@]}" "${cmd[@]}")
+				cmd=("${PS4_AUTH[@]}" "${cmd[@]}")
 			fi
 		elif type -p sudo >/dev/null; then
 			cmd=(sudo -k "${cmd[@]}")
 		else
 			cmd=(su root -c "$cmdescape")
 		fi
-		local lockfile="$(pacman-conf DBPath)/db.lck"
+		local lockfile="$(ps4-conf DBPath)/ps4db.lock"
 		while [[ -f $lockfile ]]; do
 			local timer=0
-			msg "$(gettext "Pacman is currently in use, please wait...")"
+			msg "$(gettext "Ps4 is currently in use, please wait...")"
 			while [[ -f $lockfile ]] && (( timer < 10 )); do
 				(( ++timer ))
 				sleep 3
@@ -261,13 +256,13 @@ check_deps() {
 
 	local ret=0
 	local pmout
-	pmout=$(run_pacman -T "$@")
+	pmout=$(run_ps4 -T "$@")
 	ret=$?
 
 	if (( ret == 127 )); then #unresolved deps
 		printf "%s\n" "$pmout"
 	elif (( ret )); then
-		error "$(gettext "'%s' returned a fatal error (%i): %s")" "$PACMAN" "$ret" "$pmout"
+		error "$(gettext "'%s' returned a fatal error (%i): %s")" "$PS4" "$ret" "$pmout"
 		return "$ret"
 	fi
 }
@@ -285,11 +280,11 @@ handle_deps() {
 	fi
 
 	if (( DEP_BIN )); then
-		# install missing deps from binary packages (using pacman -S)
+		# install missing deps from binary packages (using ps4 -S)
 		msg "$(gettext "Installing missing dependencies...")"
 
-		if ! run_pacman -S --asdeps "${deplist[@]}"; then
-			error "$(gettext "'%s' failed to install missing dependencies.")" "$PACMAN"
+		if ! run_ps4 -S --asdeps "${deplist[@]}"; then
+			error "$(gettext "'%s' failed to install missing dependencies.")" "$PS4"
 			return $R_DEPS_MISSING
 		fi
 	fi
@@ -353,7 +348,7 @@ remove_deps() {
 
 	msg "Removing installed dependencies..."
 	# exit cleanly on failure to remove deps as package has been built successfully
-	if ! run_pacman -Rnu ${deplist[@]}; then
+	if ! run_ps4 -Rnu ${deplist[@]}; then
 		warning "$(gettext "Failed to remove installed dependencies.")"
 		return $E_REMOVE_DEPS_FAILED
 	fi
@@ -476,7 +471,7 @@ write_kv_pair() {
 	for val in "$@"; do
 		if [[ $val = *$'\n'* ]]; then
 			error "$(gettext "Invalid value for %s: %s")" "$key" "$val"
-			exit $E_PKGBUILD_ERROR
+			exit $E_PS4PKGBUILD_ERROR
 		fi
 		printf "%s = %s\n" "$key" "$val"
 	done
@@ -488,7 +483,7 @@ write_pkginfo() {
 	merge_arch_attrs
 	generate_autodeps
 
-	printf "# Generated by makepkg %s\n" "$makepkg_version"
+	printf "# Generated by ps4mkpkg %s\n" "$ps4mkpkg_version"
 	printf "# using %s\n" "$(fakeroot -v)"
 
 	write_kv_pair "pkgname" "$pkgname"
@@ -535,18 +530,18 @@ write_buildinfo() {
 
 	local sum="$(sha256sum "${BUILDFILE}")"
 	sum=${sum%% *}
-	write_kv_pair "pkgbuild_sha256sum" $sum
+	write_kv_pair "PS4PKGBUILD_sha256sum" $sum
 
 	write_kv_pair "packager" "${PACKAGER}"
 	write_kv_pair "builddate" "${SOURCE_DATE_EPOCH}"
 	write_kv_pair "builddir"  "${BUILDDIR}"
 	write_kv_pair "startdir"  "${startdir}"
-	write_kv_pair "buildtool" "${BUILDTOOL:-makepkg}"
-	write_kv_pair "buildtoolver" "${BUILDTOOLVER:-$makepkg_version}"
+	write_kv_pair "buildtool" "${BUILDTOOL:-ps4mkpkg}"
+	write_kv_pair "buildtoolver" "${BUILDTOOLVER:-$ps4mkpkg_version}"
 	write_kv_pair "buildenv" "${BUILDENV[@]}"
 	write_kv_pair "options" "${OPTIONS[@]}"
 
-	local pkginfos_parsed=($(LC_ALL=C run_pacman -Qi | awk -F': ' '\
+	local pkginfos_parsed=($(LC_ALL=C run_ps4 -Qi | awk -F': ' '\
 		/^Name .*/ {printf "%s", $2} \
 		/^Version .*/ {printf "-%s", $2} \
 		/^Architecture .*/ {print "-"$2} \
@@ -751,9 +746,9 @@ install_package() {
 	RMDEPS=0
 
 	if (( ! SPLITPKG )); then
-		msg "$(gettext "Installing package %s with %s...")" "$pkgname" "$PACMAN -U"
+		msg "$(gettext "Installing package %s with %s...")" "$pkgname" "$PS4 -U"
 	else
-		msg "$(gettext "Installing %s package group with %s...")" "$pkgbase" "$PACMAN -U"
+		msg "$(gettext "Installing %s package group with %s...")" "$pkgbase" "$PS4 -U"
 	fi
 
 	local fullver pkgarch pkg pkglist
@@ -770,7 +765,7 @@ install_package() {
 		fi
 	done
 
-	if ! run_pacman -U "${pkglist[@]}"; then
+	if ! run_ps4 -U "${pkglist[@]}"; then
 		warning "$(gettext "Failed to install built package(s).")"
 		return $E_INSTALL_FAILED
 	fi
@@ -825,7 +820,7 @@ check_build_status() {
 
 backup_package_variables() {
 	local var
-	for var in ${pkgbuild_schema_package_overrides[@]}; do
+	for var in ${PS4PKGBUILD_schema_package_overrides[@]}; do
 		local indirect="${var}_backup"
 		eval "${indirect}=(\"\${$var[@]}\")"
 	done
@@ -833,7 +828,7 @@ backup_package_variables() {
 
 restore_package_variables() {
 	local var
-	for var in ${pkgbuild_schema_package_overrides[@]}; do
+	for var in ${PS4PKGBUILD_schema_package_overrides[@]}; do
 		local indirect="${var}_backup"
 		if [[ -n ${!indirect} ]]; then
 			eval "${var}=(\"\${$indirect[@]}\")"
@@ -868,9 +863,9 @@ run_split_packaging() {
 }
 
 usage() {
-	printf "makepkg (pacman) %s\n" "$makepkg_version"
+	printf "ps4mkpkg (ps4) %s\n" "$ps4mkpkg_version"
 	echo
-	printf -- "$(gettext "Make packages compatible for use with pacman")\n"
+	printf -- "$(gettext "Make packages compatible for use with ps4")\n"
 	echo
 	printf -- "$(gettext "Usage: %s [options]")\n" "$0"
 	echo
@@ -879,7 +874,7 @@ usage() {
 	printf -- "$(gettext "  -c, --clean      Clean up work files after build")\n"
 	printf -- "$(gettext "  -C, --cleanbuild Remove %s dir before building the package")\n" "\$srcdir/"
 	printf -- "$(gettext "  -d, --nodeps     Skip all dependency checks")\n"
-	printf -- "$(gettext "  -D, --dir <dir>  Change to directory <dir> before processing PKGBUILD")\n"
+	printf -- "$(gettext "  -D, --dir <dir>  Change to directory <dir> before processing PS4PKGBUILD")\n"
 	printf -- "$(gettext "  -e, --noextract  Do not extract source files (use existing %s dir)")\n" "\$srcdir/"
 	printf -- "$(gettext "  -f, --force      Overwrite existing package")\n"
 	printf -- "$(gettext "  -g, --geninteg   Generate integrity checks for source files")\n"
@@ -891,12 +886,12 @@ usage() {
 	printf -- "$(gettext "  -p <file>        Use an alternate build script (instead of '%s')")\n" "$BUILDSCRIPT"
 	printf -- "$(gettext "  -r, --rmdeps     Remove installed dependencies after a successful build")\n"
 	printf -- "$(gettext "  -R, --repackage  Repackage contents of the package without rebuilding")\n"
-	printf -- "$(gettext "  -s, --syncdeps   Install missing dependencies with %s")\n" "pacman"
+	printf -- "$(gettext "  -s, --syncdeps   Install missing dependencies with %s")\n" "ps4"
 	printf -- "$(gettext "  -S, --source     Generate a source-only tarball without downloaded sources")\n"
 	printf -- "$(gettext "  -V, --version    Show version information and exit")\n"
 	printf -- "$(gettext "  --allsource      Generate a source-only tarball including downloaded sources")\n"
 	printf -- "$(gettext "  --check          Run the %s function in the %s")\n" "check()" "$BUILDSCRIPT"
-	printf -- "$(gettext "  --config <file>  Use an alternate config file (instead of '%s')")\n" "$confdir/makepkg.conf"
+	printf -- "$(gettext "  --config <file>  Use an alternate config file (instead of '%s')")\n" "$confdir/ps4mkpkg.conf"
 	printf -- "$(gettext "  --holdver        Do not update VCS sources")\n"
 	printf -- "$(gettext "  --key <key>      Specify a key to use for %s signing instead of the default")\n" "gpg"
 	printf -- "$(gettext "  --noarchive      Do not create package archive")\n"
@@ -911,21 +906,20 @@ usage() {
 	printf -- "$(gettext "  --skippgpcheck   Do not verify source files with PGP signatures")\n"
 	printf -- "$(gettext "  --verifysource   Download source files (if needed) and perform integrity checks")\n"
 	echo
-	printf -- "$(gettext "These options can be passed to %s:")\n" "pacman"
+	printf -- "$(gettext "These options can be passed to %s:")\n" "ps4"
 	echo
 	printf -- "$(gettext "  --asdeps         Install packages as non-explicitly installed")\n"
 	printf -- "$(gettext "  --needed         Do not reinstall the targets that are already up to date")\n"
 	printf -- "$(gettext "  --noconfirm      Do not ask for confirmation when resolving dependencies")\n"
 	printf -- "$(gettext "  --noprogressbar  Do not show a progress bar when downloading files")\n"
 	echo
-	printf -- "$(gettext "If %s is not specified, %s will look for '%s'")\n" "-p" "makepkg" "$BUILDSCRIPT"
+	printf -- "$(gettext "If %s is not specified, %s will look for '%s'")\n" "-p" "ps4mkpkg" "$BUILDSCRIPT"
 	echo
 }
 
 version() {
-	printf "makepkg (pacman) %s\n" "$makepkg_version"
-	printf -- "Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>.\n"
-	printf -- "Copyright (C) 2002-2006 Judd Vinet <jvinet@zeroflux.org>.\n"
+	printf "ps4mkpkg (ps4) %s\n" "$ps4mkpkg_version"
+	printf -- "Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site> \n"
 	printf '\n'
 	printf -- "$(gettext "\
 This is free software; see the source for copying conditions.\n\
@@ -954,7 +948,7 @@ OPT_LONG=('allsource' 'check' 'clean' 'cleanbuild' 'config:' 'dir:' 'force' 'gen
           'printsrcinfo' 'repackage' 'rmdeps' 'sign' 'skipchecksums' 'skipinteg'
           'skippgpcheck' 'source' 'syncdeps' 'verifysource' 'version')
 
-# Pacman Options
+# Ps4 Options
 OPT_LONG+=('asdeps' 'noconfirm' 'needed' 'noprogressbar')
 
 if ! parseopts "$OPT_SHORT" "${OPT_LONG[@]}" -- "$@"; then
@@ -965,19 +959,19 @@ unset OPT_SHORT OPT_LONG OPTRET
 
 while true; do
 	case "$1" in
-		# Pacman Options
+		# Ps4 Options
 		--asdeps)         ASDEPS=1;;
 		--needed)         NEEDED=1;;
-		--noconfirm)      PACMAN_OPTS+=("--noconfirm") ;;
-		--noprogressbar)  PACMAN_OPTS+=("--noprogressbar") ;;
+		--noconfirm)      PS4_OPTS+=("--noconfirm") ;;
+		--noprogressbar)  PS4_OPTS+=("--noprogressbar") ;;
 
-		# Makepkg Options
+		# Ps4mkpkg Options
 		--allsource)      BUILDPKG=0 SOURCEONLY=2 ;;
 		-A|--ignorearch)  IGNOREARCH=1 ;;
 		-c|--clean)       CLEANUP=1 ;;
 		-C|--cleanbuild)  CLEANBUILD=1 ;;
 		--check)          RUN_CHECK='y' ;;
-		--config)         shift; MAKEPKG_CONF=$1 ;;
+		--config)         shift; PS4MKPKG_CONF=$1 ;;
 		-d|--nodeps)      NODEPS=1 ;;
 		-D|--dir)         shift; CHDIR=$1 ;;
 		-e|--noextract)   NOEXTRACT=1 ;;
@@ -989,7 +983,7 @@ while true; do
 		-i|--install)     INSTALL=1 ;;
 		--key)            shift; GPGKEY=$1 ;;
 		-L|--log)         LOGGING=1 ;;
-		-m|--nocolor)     USE_COLOR='n'; PACMAN_OPTS+=("--color" "never") ;;
+		-m|--nocolor)     USE_COLOR='n'; PS4_OPTS+=("--color" "never") ;;
 		--noarchive)      NOARCHIVE=1 ;;
 		--nocheck)        RUN_CHECK='n' ;;
 		--noverify)       RUN_VERIFY='n' ;;
@@ -1041,7 +1035,7 @@ done
 trap 'trap_exit INT "$(gettext "Aborted by user! Exiting...")"' INT
 trap 'trap_exit USR1 "$(gettext "An unknown error has occurred. Exiting...")"' ERR
 
-load_makepkg_config
+load_ps4mkpkg_config
 
 # override settings from extra variables on commandline, if any
 if (( ${#extra_environment[*]} )); then
@@ -1055,10 +1049,10 @@ done
 unset var
 PACKAGER=${PACKAGER:-"Unknown Packager"}
 
-# set pacman command if not already defined
-PACMAN=${PACMAN:-pacman}
+# set ps4 command if not already defined
+PS4=${PS4:-ps4}
 # save full path to command as PATH may change when sourcing /etc/profile
-PACMAN_PATH=$(type -P $PACMAN)
+PS4_PATH=$(type -P $PS4)
 
 # check if messages are to be printed using color
 if [[ -t 2 && $USE_COLOR != "n" ]] && check_buildenv "color" "y"; then
@@ -1068,7 +1062,7 @@ else
 fi
 
 
-# check makepkg.conf for some basic requirements
+# check ps4mkpkg.conf for some basic requirements
 lint_config || exit $E_CONFIG_ERROR
 
 
@@ -1107,17 +1101,17 @@ fi
 if (( ! INFAKEROOT )); then
 	if (( EUID == 0 )); then
 		error "$(gettext "Running %s as root is not allowed as it can cause permanent,\n\
-catastrophic damage to your system.")" "makepkg"
+catastrophic damage to your system.")" "ps4mkpkg"
 		exit $E_ROOT
 	fi
 else
 	if [[ -z $FAKEROOTKEY ]]; then
-		error "$(gettext "Do not use the %s option. This option is only for internal use by %s.")" "'-F'" "makepkg"
+		error "$(gettext "Do not use the %s option. This option is only for internal use by %s.")" "'-F'" "ps4mkpkg"
 		exit $E_INVALID_OPTION
 	fi
 fi
 
-unset pkgname "${pkgbuild_schema_strings[@]}" "${pkgbuild_schema_arrays[@]}"
+unset pkgname "${PS4PKGBUILD_schema_strings[@]}" "${PS4PKGBUILD_schema_arrays[@]}"
 unset "${known_hash_algos[@]/%/sums}"
 unset -f pkgver verify prepare build check package "${!package_@}"
 unset "${!makedepends_@}" "${!depends_@}" "${!source_@}" "${!checkdepends_@}"
@@ -1128,17 +1122,17 @@ unset "${!sha256sums_@}" "${!sha384sums_@}" "${!sha512sums_@}" "${!b2sums_@}"
 BUILDFILE=${BUILDFILE:-$BUILDSCRIPT}
 if [[ ! -f $BUILDFILE ]]; then
 	error "$(gettext "%s does not exist.")" "$BUILDFILE"
-	exit $E_PKGBUILD_ERROR
+	exit $E_PS4PKGBUILD_ERROR
 
 else
 	if [[ $(<"$BUILDFILE") = *$'\r'* ]]; then
 		error "$(gettext "%s contains %s characters and cannot be sourced.")" "$BUILDFILE" "CRLF"
-		exit $E_PKGBUILD_ERROR
+		exit $E_PS4PKGBUILD_ERROR
 	fi
 
 	if [[ ! $BUILDFILE -ef $PWD/${BUILDFILE##*/} ]]; then
 		error "$(gettext "%s must be in the current working directory.")" "$BUILDFILE"
-		exit $E_PKGBUILD_ERROR
+		exit $E_PS4PKGBUILD_ERROR
 	fi
 
 	if [[ ${BUILDFILE:0:1} != "/" ]]; then
@@ -1149,9 +1143,9 @@ fi
 
 pkgbase=${pkgbase:-${pkgname[0]}}
 
-# check the PKGBUILD for some basic requirements
-if (( MAKEPKG_LINT_PKGBUILD != 0 )); then
-	lint_pkgbuild || exit $E_PKGBUILD_ERROR
+# check the PS4PKGBUILD for some basic requirements
+if (( PS4MKPKG_LINT_PS4PS4PKGBUILD != 0 )); then
+	lint_PS4PKGBUILD || exit $E_PS4PS4PKGBUILD_ERROR
 fi
 
 if (( !SOURCEONLY && !PRINTSRCINFO )); then
@@ -1189,7 +1183,7 @@ if (( ${#pkgname[@]} > 1 )) || have_function package_${pkgname}; then
 	SPLITPKG=1
 fi
 
-# test for available PKGBUILD functions
+# test for available PS4PKGBUILD functions
 if have_function verify; then
 	# "Hide" verify() function if not going to be run
 	if [[ $RUN_VERIFY != "n" ]] && (( ! SKIPCHECKSUMS && ! SKIPPGPCHECK )); then
@@ -1252,8 +1246,8 @@ if (( INFAKEROOT )); then
 	exit $E_OK
 fi
 
-# check we have the software required to process the PKGBUILD
-check_software || exit $E_MISSING_MAKEPKG_DEPS
+# check we have the software required to process the PS4PKGBUILD
+check_software || exit $E_MISSING_PS4MKPKG_DEPS
 
 # check if gpg signature is to be created and if signing key is valid
 if { [[ -z $SIGNPKG ]] && check_buildenv "sign" "y"; } || [[ $SIGNPKG == 'y' ]]; then
@@ -1308,7 +1302,7 @@ if (( NODEPS || ( VERIFYSOURCE && !DEP_BIN ) )); then
 	fi
 else
 	if (( RMDEPS && ! INSTALL )); then
-		original_pkglist=($(run_pacman -Qq))    # required by remove_dep
+		original_pkglist=($(run_ps4 -Qq))    # required by remove_dep
 	fi
 	deperr=0
 
@@ -1316,7 +1310,7 @@ else
 	resolve_deps ${depends[@]} || deperr=1
 
 	if (( RMDEPS && INSTALL )); then
-		original_pkglist=($(run_pacman -Qq))    # required by remove_dep
+		original_pkglist=($(run_ps4 -Qq))    # required by remove_dep
 	fi
 
 	if (( ! deperr )); then
@@ -1329,7 +1323,7 @@ else
 	fi
 
 	if (( RMDEPS )); then
-		current_pkglist=($(run_pacman -Qq))    # required by remove_deps
+		current_pkglist=($(run_ps4 -Qq))    # required by remove_deps
 	fi
 
 	if (( deperr )); then

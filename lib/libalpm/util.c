@@ -1,12 +1,8 @@
 /*
  *  util.c
  *
- *  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
- *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
- *  Copyright (c) 2005 by Aurelien Foret <orelien@chez.com>
- *  Copyright (c) 2005 by Christian Hamar <krics@linuxforum.hu>
- *  Copyright (c) 2006 by David Kimpe <dnaku@frugalware.org>
- *  Copyright (c) 2005, 2006 by Miklos Vajna <vmiklos@frugalware.org>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1299,8 +1295,8 @@ cleanup:
 }
 
 /** Parse a full package specifier.
- * @param target package specifier to parse, such as: "pacman-4.0.1-2",
- * "pacman-4.01-2/", or "pacman-4.0.1-2/desc"
+ * @param target package specifier to parse, such as: "ps4-4.0.1-2",
+ * "ps4-4.01-2/", or "ps4-4.0.1-2/desc"
  * @param name to hold package name
  * @param version to hold package version
  * @param name_hash to hold package name hash

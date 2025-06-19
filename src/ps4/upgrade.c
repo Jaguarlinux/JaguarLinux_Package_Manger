@@ -25,8 +25,8 @@
 #include <alpm.h>
 #include <alpm_list.h>
 
-/* pacman */
-#include "pacman.h"
+/* ps4 */
+#include "ps4.h"
 #include "conf.h"
 #include "util.h"
 
@@ -65,7 +65,7 @@ static int load_packages(alpm_list_t *targets, int siglevel)
  *
  * @return 0 on success, 1 on failure
  */
-int pacman_upgrade(alpm_list_t *targets)
+int ps4_upgrade(alpm_list_t *targets)
 {
 	int retval = 0;
 	alpm_list_t *remote_targets = NULL, *fetched_files = NULL;

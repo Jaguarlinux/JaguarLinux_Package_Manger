@@ -1,8 +1,8 @@
 /*
- *  pacman.c
+ *  ps4.c
  *
- *  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
- *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,8 +40,8 @@
 #include <alpm.h>
 #include <alpm_list.h>
 
-/* pacman */
-#include "pacman.h"
+/* ps4 */
+#include "ps4.h"
 #include "util.h"
 #include "conf.h"
 #include "sighandler.h"
@@ -237,14 +237,13 @@ static void usage(int op, const char * const myname)
 #undef addlist
 }
 
-/** Output pacman version and copyright.
+/** Output ps4 version and copyright.
  */
 static void version(void)
 {
 	printf("\n");
-	printf(" .--.                  Pacman v%s - libalpm v%s\n", PACKAGE_VERSION, alpm_version());
-	printf("/ _.-' .-.  .-.  .-.   Copyright (C) 2006-2025 Pacman Development Team\n");
-	printf("\\  '-. '-'  '-'  '-'   Copyright (C) 2002-2006 Judd Vinet\n");
+	printf(" .--.                  PS4 v%s - libalpm v%s\n", PACKAGE_VERSION, alpm_version());
+	printf("/ _.-' .-.  .-.  .-.   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>\n");
 	printf(" '--'\n");
 	printf(_("                       This program may be freely redistributed under\n"
 	         "                       the terms of the GNU General Public License.\n"));
@@ -276,7 +275,7 @@ static void setuseragent(void)
 	int len;
 
 	uname(&un);
-	len = snprintf(agent, 100, "pacman/%s (%s %s) libalpm/%s",
+	len = snprintf(agent, 100, "ps4/%s (%s %s) libalpm/%s",
 			PACKAGE_VERSION, un.sysname, un.machine, alpm_version());
 	if(len >= 100) {
 		pm_printf(ALPM_LOG_WARNING, _("HTTP_USER_AGENT truncated\n"));
@@ -921,7 +920,7 @@ static int parseargs(int argc, char *argv[])
 		{"query",      no_argument,       0, 'Q'},
 		{"remove",     no_argument,       0, 'R'},
 		{"sync",       no_argument,       0, 'S'},
-		{"deptest",    no_argument,       0, 'T'}, /* used by makepkg */
+		{"deptest",    no_argument,       0, 'T'}, /* used by ps4mkpkg */
 		{"upgrade",    no_argument,       0, 'U'},
 		{"version",    no_argument,       0, 'V'},
 		{"help",       no_argument,       0, 'h'},
@@ -1109,7 +1108,7 @@ static void cl_to_log(int argc, char *argv[])
 {
 	char *cl_text = arg_to_string(argc, argv);
 	if(cl_text) {
-		alpm_logaction(config->handle, PACMAN_CALLER_PREFIX,
+		alpm_logaction(config->handle, PS4_CALLER_PREFIX,
 				"Running '%s'\n", cl_text);
 		free(cl_text);
 	}
@@ -1223,7 +1222,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	pm_printf(ALPM_LOG_DEBUG, "pacman v%s - libalpm v%s\n", PACKAGE_VERSION, alpm_version());
+	pm_printf(ALPM_LOG_DEBUG, "ps4 v%s - libalpm v%s\n", PACKAGE_VERSION, alpm_version());
 
 	/* parse the config file */
 	ret = parseconfig(config->configfile);
@@ -1274,25 +1273,25 @@ int main(int argc, char *argv[])
 	/* start the requested operation */
 	switch(config->op) {
 		case PM_OP_DATABASE:
-			ret = pacman_database(pm_targets);
+			ret = ps4_database(pm_targets);
 			break;
 		case PM_OP_REMOVE:
-			ret = pacman_remove(pm_targets);
+			ret = ps4_remove(pm_targets);
 			break;
 		case PM_OP_UPGRADE:
-			ret = pacman_upgrade(pm_targets);
+			ret = ps4_upgrade(pm_targets);
 			break;
 		case PM_OP_QUERY:
-			ret = pacman_query(pm_targets);
+			ret = ps4_query(pm_targets);
 			break;
 		case PM_OP_SYNC:
-			ret = pacman_sync(pm_targets);
+			ret = ps4_sync(pm_targets);
 			break;
 		case PM_OP_DEPTEST:
-			ret = pacman_deptest(pm_targets);
+			ret = ps4_deptest(pm_targets);
 			break;
 		case PM_OP_FILES:
-			ret = pacman_files(pm_targets);
+			ret = ps4_files(pm_targets);
 			break;
 		default:
 			pm_printf(ALPM_LOG_ERROR, _("no operation specified (use -h for help)\n"));

@@ -1,8 +1,8 @@
 /*
  *  conf.c
  *
- *  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
- *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-/* pacman */
+/* ps4 */
 #include "conf.h"
 #include "ini.h"
 #include "util.h"
@@ -873,7 +873,7 @@ static int setup_libalpm(void)
 		pm_printf(ALPM_LOG_ERROR, _("failed to initialize alpm library:\n(root: %s, dbpath: %s)\n%s\n"),
 		        config->rootdir, config->dbpath, alpm_strerror(err));
 		if(err == ALPM_ERR_DB_VERSION) {
-			fprintf(stderr, _("try running pacman-db-upgrade\n"));
+			fprintf(stderr, _("try running ps4-db-upgrade\n"));
 		}
 		return -1;
 	}

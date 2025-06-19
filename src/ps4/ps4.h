@@ -1,8 +1,8 @@
 /*
- *  pacman.h
+ *  ps4.h
  *
- *  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
- *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  ps4 Development Team <ps4-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,27 +17,27 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef PM_PACMAN_H
-#define PM_PACMAN_H
+#ifndef PM_PS4_H
+#define PM_PS4_H
 
 #include <alpm_list.h>
 
-#define PACMAN_CALLER_PREFIX "PACMAN"
+#define PS4_CALLER_PREFIX "PS4"
 
 /* database.c */
-int pacman_database(alpm_list_t *targets);
+int ps4_database(alpm_list_t *targets);
 /* deptest.c */
-int pacman_deptest(alpm_list_t *targets);
+int ps4_deptest(alpm_list_t *targets);
 /* files.c */
-int pacman_files(alpm_list_t *files);
+int ps4_files(alpm_list_t *files);
 /* query.c */
-int pacman_query(alpm_list_t *targets);
+int ps4_query(alpm_list_t *targets);
 /* remove.c */
-int pacman_remove(alpm_list_t *targets);
+int ps4_remove(alpm_list_t *targets);
 /* sync.c */
-int pacman_sync(alpm_list_t *targets);
+int ps4_sync(alpm_list_t *targets);
 int sync_prepare_execute(void);
 /* upgrade.c */
-int pacman_upgrade(alpm_list_t *targets);
+int ps4_upgrade(alpm_list_t *targets);
 
-#endif /* PM_PACMAN_H */
+#endif /* PM_PS4_H */

@@ -1,8 +1,8 @@
 /*
  *  package.c
  *
- *  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
- *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 #include <alpm.h>
 #include <alpm_list.h>
 
-/* pacman */
+/* ps4 */
 #include "package.h"
 #include "util.h"
 #include "conf.h"
@@ -38,7 +38,7 @@
 #define CLBUF_SIZE 4096
 
 /* The term "title" refers to the first field of each line in the package
- * information displayed by pacman. Titles are stored in the `titles` array and
+ * information displayed by ps4. Titles are stored in the `titles` array and
  * referenced by the following indices.
  */
 enum {

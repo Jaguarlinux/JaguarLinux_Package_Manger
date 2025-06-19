@@ -1,7 +1,8 @@
 /*
- *  pacman-conf.c - parse pacman configuration files
+ *  ps4-conf.c - parse ps4 configuration files
  *
- *  Copyright (c) 2013-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +23,7 @@
 #include "conf.h"
 #include "util.h"
 
-const char *myname = "pacman-conf", *myver = "1.0.0";
+const char *myname = "ps4-conf", *myver = "1.0.0";
 
 alpm_list_t *directives = NULL;
 char sep = '\n', *repo_name = NULL;
@@ -38,9 +39,9 @@ static void cleanup(void)
 static void usage(int ret)
 {
 	FILE *stream = (ret ? stderr : stdout);
-	fputs(_("pacman-conf - query pacman's configuration file\n"), stream);
-	fputs(_("usage:  pacman-conf [options] [<directive>...]\n"), stream);
-	fputs(_("        pacman-conf (--repo-list|--help|--version)\n"), stream);
+	fputs(_("ps4-conf - query ps4's configuration file\n"), stream);
+	fputs(_("usage:  ps4-conf [options] [<directive>...]\n"), stream);
+	fputs(_("        ps4-conf (--repo-list|--help|--version)\n"), stream);
 	fputs(_("options:\n"), stream);
 	fputs(_("  -c, --config=<path>  set an alternate configuration file\n"), stream);
 	fputs(_("  -R, --rootdir=<path> set an alternate installation root\n"), stream);

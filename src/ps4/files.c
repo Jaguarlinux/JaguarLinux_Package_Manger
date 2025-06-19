@@ -1,7 +1,8 @@
 /*
  *  files.c
  *
- *  Copyright (c) 2015-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,8 +22,8 @@
 #include <alpm_list.h>
 #include <regex.h>
 
-/* pacman */
-#include "pacman.h"
+/* ps4 */
+#include "ps4.h"
 #include "util.h"
 #include "conf.h"
 #include "package.h"
@@ -306,7 +307,7 @@ static int files_list(alpm_list_t *syncs, alpm_list_t *targets) {
 }
 
 
-int pacman_files(alpm_list_t *targets)
+int ps4_files(alpm_list_t *targets)
 {
 	alpm_list_t *files_dbs = NULL;
 
@@ -319,7 +320,7 @@ int pacman_files(alpm_list_t *targets)
 	if(config->op_s_sync) {
 		/* grab a fresh package list */
 		colon_printf(_("Synchronizing package databases...\n"));
-		alpm_logaction(config->handle, PACMAN_CALLER_PREFIX,
+		alpm_logaction(config->handle, PS4_CALLER_PREFIX,
 				"synchronizing package lists\n");
 		if(!sync_syncdbs(config->op_s_sync, files_dbs)) {
 			return 1;

@@ -1,8 +1,9 @@
 #!/bin/bash -e
 #
-#   pacman-db-upgrade - upgrade the local pacman db to a newer format
+#   ps4-db-upgrade - upgrade the local ps4 db to a newer format
 #
-#   Copyright (c) 2010-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+#   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,21 +23,21 @@
 umask 022
 
 # gettext initialization
-export TEXTDOMAIN='pacman-scripts'
+export TEXTDOMAIN='ps4-scripts'
 export TEXTDOMAINDIR='@localedir@'
 
 declare -r myver='@PACKAGE_VERSION@'
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-# Import libmakepkg
-source "$MAKEPKG_LIBRARY"/util/message.sh
-source "$MAKEPKG_LIBRARY"/util/parseopts.sh
+# Import libps4mkpkg
+source "$PS4MKPKG_LIBRARY"/util/message.sh
+source "$PS4MKPKG_LIBRARY"/util/parseopts.sh
 
 usage() {
-	printf "pacman-db-upgrade (pacman) %s\n" "${myver}"
+	printf "ps4-db-upgrade (ps4) %s\n" "${myver}"
 	echo
-	printf -- "$(gettext "Upgrade the local pacman database to a newer format")\n"
+	printf -- "$(gettext "Upgrade the local ps4 database to a newer format")\n"
 	echo
 	printf -- "$(gettext "Usage: %s [options]")\n" "$0"
 	echo
@@ -51,8 +52,8 @@ usage() {
 }
 
 version() {
-	printf "pacman-db-upgrade (pacman) %s\n" "$myver"
-	printf -- "Copyright (c) 2010-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>.\n"
+	printf "ps4-db-upgrade (ps4) %s\n" "$myver"
+	printf -- "Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>"
 	printf '\n'
 	printf -- "$(gettext "\
 This is free software; see the source for copying conditions.\n\
@@ -98,7 +99,7 @@ while true; do
 	case "$1" in
 		--config)     shift; conffile="$1" ;;
 		-d|--dbpath)  shift; dbroot="$1" ;;
-		-r|--root)    shift; pacroot="$1" ;;
+		-r|--root)    shift; ps4root="$1" ;;
 		-h|--help)    usage; exit 0 ;;
 		--nocolor)    USE_COLOR='n' ;;
 		-V|--version) version; exit 0 ;;
@@ -107,9 +108,9 @@ while true; do
 	shift
 done
 
-conffile=${conffile:-@sysconfdir@/pacman.conf}
-[[ -z $pacroot ]] && pacroot=$(pacman-conf --config="$conffile" rootdir)
-[[ -z $dbroot ]] && dbroot=$(pacman-conf --config="$conffile" --rootdir="$pacroot" dbpath)
+conffile=${conffile:-@sysconfdir@/ps4.conf}
+[[ -z $ps4root ]] && ps4root=$(ps4-conf --config="$conffile" rootdir)
+[[ -z $dbroot ]] && dbroot=$(ps4-conf --config="$conffile" --rootdir="$ps4root" dbpath)
 
 # check if messages are to be printed using color
 if [[ -t 2 && $USE_COLOR != "n" ]]; then
@@ -123,7 +124,7 @@ if [[ ! -d $dbroot ]]; then
 fi
 
 if [[ ! -d $dbroot/local ]]; then
-	die "$(gettext "%s is not a pacman database directory.")" "$dbroot"
+	die "$(gettext "%s is not a ps4 database directory.")" "$dbroot"
 fi
 
 if [[ ! -w $dbroot ]]; then
@@ -133,13 +134,13 @@ fi
 # strip any trailing slash from our dbroot
 dbroot="${dbroot%/}"
 # form the path to our lockfile location
-lockfile="${dbroot}/db.lck"
+lockfile="${dbroot}/ps4db.lock"
 
-# make sure pacman isn't running
+# make sure ps4 isn't running
 if [[ -f $lockfile ]]; then
-	die "$(gettext "Pacman lock file was found. Cannot run while pacman is running.")"
+	die "$(gettext "PS4 lock file was found. Cannot run while ps4 is running.")"
 fi
-# do not let pacman run while we do this
+# do not let ps4 run while we do this
 touch "$lockfile"
 
 if [[ -f "${dbroot}"/local/ALPM_DB_VERSION ]]; then
@@ -147,7 +148,7 @@ if [[ -f "${dbroot}"/local/ALPM_DB_VERSION ]]; then
 fi
 
 if [[ -z "$db_version" ]]; then
-	# pacman-3.4 to 3.5 upgrade - merge depends into desc
+	# ps4-3.4 to 3.5 upgrade - merge depends into desc
 	if [[ $(find "$dbroot"/local -name depends) ]]; then
 		msg "$(gettext "Pre-3.5 database format detected - upgrading...")"
 		for i in "$dbroot"/local/*; do
@@ -159,14 +160,14 @@ if [[ -z "$db_version" ]]; then
 		msg "$(gettext "Done.")"
 	fi
 
-	# pacman 4.1 to 4.2 upgrade - remove directory symlink support
+	# ps4 4.1 to 4.2 upgrade - remove directory symlink support
 	msg "$(gettext "Pre-4.2 database format detected - upgrading...")"
 
 	dirlist=()
 
 	unset GREP_OPTIONS
 	while IFS= read -r dir; do
-		dirlist+=("${pacroot}${dir%/}")
+		dirlist+=("${ps4root}${dir%/}")
 	done < <(grep -h '/$' "$dbroot"/local/*/files | sort -ru)
 
 	mapfile -t dirlist < <(
@@ -175,20 +176,20 @@ if [[ -z "$db_version" ]]; then
 		done)
 
 	if [[ ${#dirlist[@]} != 0 ]]; then
-		pacroot="$(resolve_dir "$pacroot")"
+		ps4root="$(resolve_dir "$ps4root")"
 
 		for dir in "${dirlist[@]}"; do
 			realdir="$(resolve_dir "$dir")"
 
 			# verify realdir is inside root
-			if [[ ${realdir:0:${#pacroot}} != "$pacroot" ]]; then
-				warning "$(gettext "symlink '%s' points outside pacman root, manual repair required")" "$dir"
+			if [[ ${realdir:0:${#ps4root}} != "$ps4root" ]]; then
+				warning "$(gettext "symlink '%s' points outside ps4 root, manual repair required")" "$dir"
 				continue
 			fi
 
 			# convert to an appropriate form for the replacement
-			olddir="${dir:${#pacroot}}/"
-			newdir="${realdir:${#pacroot}}"
+			olddir="${dir:${#ps4root}}/"
+			newdir="${realdir:${#ps4root}}"
 
 			# construct the parents of the new directory
 			parents=""

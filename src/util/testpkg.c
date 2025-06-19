@@ -1,8 +1,8 @@
 /*
- *  testpkg.c : Test a pacman package for validity
+ *  testpkg.c : Test a ps4 package for validity
  *
- *  Copyright (c) 2007-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
- *  Copyright (c) 2007 by Aaron Griffin <aaronmgriffin@gmail.com>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,8 +52,8 @@ int main(int argc, char *argv[])
 #endif
 
 	if(argc != 2) {
-		fprintf(stderr, "testpkg (pacman) v" PACKAGE_VERSION "\n\n");
-		fprintf(stderr,	_("Test a pacman package for validity.\n\n"));
+		fprintf(stderr, "testpkg (ps4) v" PACKAGE_VERSION "\n\n");
+		fprintf(stderr,	_("Test a ps4 package for validity.\n\n"));
 		fprintf(stderr,	_("Usage: testpkg <package file>\n"));
 		return 1;
 	}

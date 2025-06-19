@@ -25,8 +25,8 @@
 #include <alpm.h>
 #include <alpm_list.h>
 
-/* pacman */
-#include "pacman.h"
+/* ps4 */
+#include "ps4.h"
 #include "util.h"
 #include "conf.h"
 
@@ -76,7 +76,7 @@ static int remove_target(const char *target)
  *
  * @return 0 on success, 1 on failure
  */
-int pacman_remove(alpm_list_t *targets)
+int ps4_remove(alpm_list_t *targets)
 {
 	int retval = 0;
 	alpm_list_t *i, *data = NULL;

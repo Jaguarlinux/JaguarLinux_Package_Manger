@@ -1,8 +1,8 @@
 /*
  *  handle.h
  *
- *  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
- *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -88,12 +88,12 @@ struct _alpm_handle_t {
 
 	/* filesystem paths */
 	char *root;              /* Root path, default '/' */
-	char *dbpath;            /* Base path to pacman's DBs */
+	char *dbpath;            /* Base path to ps4's DBs */
 	char *logfile;           /* Name of the log file */
 	char *lockfile;          /* Name of the lock file */
 	char *gpgdir;            /* Directory where GnuPG files are stored */
 	char *sandboxuser;       /* User to switch to for sensitive operations */
-	alpm_list_t *cachedirs;  /* Paths to pacman cache directories */
+	alpm_list_t *cachedirs;  /* Paths to ps4 cache directories */
 	alpm_list_t *hookdirs;   /* Paths to hook directories */
 	alpm_list_t *overwrite_files; /* Paths that may be overwritten */
 

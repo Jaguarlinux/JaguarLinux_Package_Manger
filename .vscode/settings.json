@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "util.h": "c",
+        "conf.h": "c",
+        "alpm_list.h": "c"
+    }
+}

@@ -1,8 +1,8 @@
 /*
  *  callback.c
  *
- *  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
- *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
+ *   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  ps4 Development Team <ps4-dev@lists.archlinux.org>
+ *   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,8 +33,8 @@
 
 #include <alpm.h>
 
-/* pacman */
-#include "pacman.h"
+/* ps4 */
+#include "ps4.h"
 #include "callback.h"
 #include "util.h"
 #include "conf.h"
@@ -43,7 +43,7 @@
 static int total_enabled = 0;
 static off_t list_total = 0.0;
 static size_t list_total_pkgs = 0;
-static struct pacman_progress_bar *totalbar;
+static struct ps4_progress_bar *totalbar;
 
 /* delayed output during progress bar */
 static int on_progress = 0;
@@ -56,7 +56,7 @@ static alpm_list_t *output = NULL;
 #define CLOCK_MONOTONIC_COARSE CLOCK_MONOTONIC
 #endif
 
-struct pacman_progress_bar {
+struct ps4_progress_bar {
 	char *filename;
 	off_t xfered; /* Current amount of transferred data */
 	off_t total_size;
@@ -72,14 +72,14 @@ struct pacman_progress_bar {
 };
 
 /* This datastruct represents the state of multiline progressbar UI */
-struct pacman_multibar_ui {
+struct ps4_multibar_ui {
 	/* List of active downloads handled by multibar UI.
 	 * Once the first download in the list is completed it is removed
 	 * from this list and we never redraw it anymore.
 	 * If the download is in this list, then the UI can redraw the progress bar or change
 	 * the order of the bars (e.g. moving completed bars to the top of the list)
 	 */
-	alpm_list_t *active_downloads; /* List of type 'struct pacman_progress_bar' */
+	alpm_list_t *active_downloads; /* List of type 'struct ps4_progress_bar' */
 
 	/* Number of active download bars that multibar UI handles. */
 	size_t active_downloads_num;
@@ -96,12 +96,12 @@ struct pacman_multibar_ui {
 	int cursor_lineno;
 };
 
-struct pacman_multibar_ui multibar_ui = {0};
+struct ps4_multibar_ui multibar_ui = {0};
 
 static int dload_progressbar_enabled(void);
 static void init_total_progressbar(void);
-static void update_bar_finalstats(struct pacman_progress_bar *bar);
-static void draw_pacman_progress_bar(struct pacman_progress_bar *bar);
+static void update_bar_finalstats(struct ps4_progress_bar *bar);
+static void draw_ps4_progress_bar(struct ps4_progress_bar *bar);
 
 void multibar_move_completed_up(bool value) {
 	multibar_ui.move_completed_up = value;
@@ -392,7 +392,7 @@ void cb_event(void *ctx, alpm_event_t *event)
 			console_cursor_move_end();
 			if(total_enabled) {
 				update_bar_finalstats(totalbar);
-				draw_pacman_progress_bar(totalbar);
+				draw_ps4_progress_bar(totalbar);
 				free(totalbar->filename);
 				free(totalbar);
 				printf("\n");
@@ -732,12 +732,12 @@ void console_cursor_move_end(void)
 }
 
 /* Returns true if element with the specified name is found, false otherwise */
-static bool find_bar_for_filename(const char *filename, int *index, struct pacman_progress_bar **bar)
+static bool find_bar_for_filename(const char *filename, int *index, struct ps4_progress_bar **bar)
 {
 	int i = 0;
 	alpm_list_t *listitem = multibar_ui.active_downloads;
 	for(; listitem; listitem = listitem->next, i++) {
-		struct pacman_progress_bar *b = listitem->data;
+		struct ps4_progress_bar *b = listitem->data;
 		if (strcmp(b->filename, filename) == 0) {
 			/* we found a progress bar with the given name */
 			*index = i;
@@ -751,7 +751,7 @@ static bool find_bar_for_filename(const char *filename, int *index, struct pacma
 
 static void init_total_progressbar(void)
 {
-	totalbar = calloc(1, sizeof(struct pacman_progress_bar));
+	totalbar = calloc(1, sizeof(struct ps4_progress_bar));
 	assert(totalbar);
 	totalbar->filename = strdup(_("Total"));
 	assert(totalbar->filename);
@@ -773,7 +773,7 @@ static char *clean_filename(const char *filename)
 	return fname;
 }
 
-static void draw_pacman_progress_bar(struct pacman_progress_bar *bar)
+static void draw_ps4_progress_bar(struct ps4_progress_bar *bar)
 {
 	int infolen, len;
 	int filenamelen;
@@ -889,7 +889,7 @@ static void dload_init_event(const char *filename, alpm_download_event_init_t *d
 		return;
 	}
 
-	struct pacman_progress_bar *bar = calloc(1, sizeof(struct pacman_progress_bar));
+	struct ps4_progress_bar *bar = calloc(1, sizeof(struct ps4_progress_bar));
 	assert(bar);
 	bar->filename = strdup(filename);
 	assert(bar->filename);
@@ -904,7 +904,7 @@ static void dload_init_event(const char *filename, alpm_download_event_init_t *d
 
 	if(total_enabled) {
 		/* redraw the total download progress bar */
-		draw_pacman_progress_bar(totalbar);
+		draw_ps4_progress_bar(totalbar);
 		printf("\n");
 		multibar_ui.cursor_lineno++;
 	}
@@ -915,7 +915,7 @@ static void dload_init_event(const char *filename, alpm_download_event_init_t *d
 /* Update progress bar rate/eta stats.
  * Returns true if the bar redraw is required, false otherwise
  */
-static bool update_bar_stats(struct pacman_progress_bar *bar)
+static bool update_bar_stats(struct ps4_progress_bar *bar)
 {
 	int64_t timediff;
 	off_t last_chunk_amount;
@@ -945,7 +945,7 @@ static bool update_bar_stats(struct pacman_progress_bar *bar)
 	return true;
 }
 
-static void update_bar_finalstats(struct pacman_progress_bar *bar)
+static void update_bar_finalstats(struct ps4_progress_bar *bar)
 {
 	int64_t timediff;
 
@@ -968,7 +968,7 @@ static void update_bar_finalstats(struct pacman_progress_bar *bar)
 static void dload_progress_event(const char *filename, alpm_download_event_progress_t *data)
 {
 	int index;
-	struct pacman_progress_bar *bar;
+	struct ps4_progress_bar *bar;
 	bool ok;
 	off_t last_chunk_amount;
 
@@ -986,14 +986,14 @@ static void dload_progress_event(const char *filename, alpm_download_event_progr
 
 	if(update_bar_stats(bar)) {
 		console_cursor_goto_bar(index);
-		draw_pacman_progress_bar(bar);
+		draw_ps4_progress_bar(bar);
 	}
 
 	if(total_enabled) {
 		totalbar->xfered += last_chunk_amount;
 		if(update_bar_stats(totalbar)) {
 			console_cursor_move_end();
-			draw_pacman_progress_bar(totalbar);
+			draw_ps4_progress_bar(totalbar);
 		}
 	}
 
@@ -1007,7 +1007,7 @@ static void dload_retry_event(const char *filename, alpm_download_event_retry_t 
 	}
 
 	int index;
-	struct pacman_progress_bar *bar;
+	struct ps4_progress_bar *bar;
 	bool ok = find_bar_for_filename(filename, &index, &bar);
 	assert(ok);
 
@@ -1032,7 +1032,7 @@ static void dload_retry_event(const char *filename, alpm_download_event_retry_t 
 static void dload_complete_event(const char *filename, alpm_download_event_completed_t *data)
 {
 	int index;
-	struct pacman_progress_bar *bar;
+	struct ps4_progress_bar *bar;
 	bool ok;
 
 	if(!dload_progressbar_enabled()) {
@@ -1065,19 +1065,19 @@ static void dload_complete_event(const char *filename, alpm_download_event_compl
 			/* If this item completed then move it to the top.
 			 * Swap 0-th bar data with `index`-th one
 			 */
-			struct pacman_progress_bar *former_topbar = multibar_ui.active_downloads->data;
+			struct ps4_progress_bar *former_topbar = multibar_ui.active_downloads->data;
 			alpm_list_t *baritem = alpm_list_nth(multibar_ui.active_downloads, index);
 			multibar_ui.active_downloads->data = bar;
 			baritem->data = former_topbar;
 
 			console_cursor_goto_bar(index);
-			draw_pacman_progress_bar(former_topbar);
+			draw_ps4_progress_bar(former_topbar);
 
 			index = 0;
 		}
 
 		console_cursor_goto_bar(index);
-		draw_pacman_progress_bar(bar);
+		draw_ps4_progress_bar(bar);
 	} else {
 		console_cursor_goto_bar(index);
 		printf(_(" %s failed to download"), bar->filename);
@@ -1090,7 +1090,7 @@ static void dload_complete_event(const char *filename, alpm_download_event_compl
 	 */
 	while(multibar_ui.active_downloads) {
 		alpm_list_t *head = multibar_ui.active_downloads;
-		struct pacman_progress_bar *j = head->data;
+		struct ps4_progress_bar *j = head->data;
 		if(j->completed) {
 			multibar_ui.cursor_lineno--;
 			multibar_ui.active_downloads_num--;
