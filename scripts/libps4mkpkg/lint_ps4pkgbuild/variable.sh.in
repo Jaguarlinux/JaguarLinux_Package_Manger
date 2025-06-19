@@ -18,23 +18,23 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_VARIABLE_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_VARIABLE_SH=1
+[[ -n "$LIBMAKEPKG_LINT_PS4PKGBUILDVARIABLE_SH" ]] && return
+LIBMAKEPKG_LINT_PS4PKGBUILD_VARIABLE_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
-source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
-source "$MAKEPKG_LIBRARY/util/schema.sh"
+source "$PS4MKPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
+source "$PS4MKPKG_LIBRARY/util/schema.sh"
 
-lint_pkgbuild_functions+=('lint_variable')
-lint_pkgbuild_functions+=('lint_array')
+lint_ps4pkgbuild_functions+=('lint_variable')
+lint_ps4pkgbuild_functions+=('lint_array')
 
 lint_variable() {
 	local i a pkg out bad ret=0
 
 	# global variables
-	for i in ${pkgbuild_schema_arrays[@]}; do
+	for i in ${ps4pkgbuild_schema_arrays[@]}; do
 		if declare -p $i > /dev/null 2>&1; then
 			if ! is_array $i; then
 				error "$(gettext "%s should be an array")" "$i"
@@ -46,7 +46,7 @@ lint_variable() {
 	for a in ${arch[@]}; do
 		[[ $a == "any" ]] && continue
 
-		for i in ${pkgbuild_schema_arch_arrays[@]}; do
+		for i in ${ps4pkgbuild_schema_arch_arrays[@]}; do
 			if declare -p "${i}_${a}" > /dev/null 2>&1; then
 				if ! is_array ${i}_${a}; then
 					error "$(gettext "%s should be an array")" "${i}_${a}"
@@ -56,7 +56,7 @@ lint_variable() {
 		done
 	done
 
-	for i in ${pkgbuild_schema_strings[@]}; do
+	for i in ${ps4pkgbuild_schema_strings[@]}; do
 		if declare -p "$i" > /dev/null 2>&1; then
 			if is_array $i; then
 				error "$(gettext "%s should not be an array")" "$i"
@@ -67,7 +67,7 @@ lint_variable() {
 
 	# package function variables
 	for pkg in ${pkgname[@]}; do
-		for i in ${pkgbuild_schema_arrays[@]}; do
+		for i in ${ps4pkgbuild_schema_arrays[@]}; do
 			if extract_function_variable "package_$pkg" $i 0 out; then
 				error "$(gettext "%s should be an array")" "$i"
 				ret=1
@@ -85,7 +85,7 @@ lint_variable() {
 			done
 		done
 
-		for i in ${pkgbuild_schema_strings[@]}; do
+		for i in ${ps4pkgbuild_schema_strings[@]}; do
 			if extract_function_variable "package_$pkg" $i 1 out; then
 				error "$(gettext "%s should not be an array")" "$i"
 				ret=1
@@ -99,9 +99,9 @@ lint_variable() {
 lint_array() {
 	local i var ret=0
 
-	for i in ${pkgbuild_schema_arrays[@]}; do
+	for i in ${ps4pkgbuild_schema_arrays[@]}; do
 		local l=()
-		get_pkgbuild_all_split_attributes $i l
+		get_ps4pkgbuild_all_split_attributes $i l
 
 		for var in "${l[@]}"; do
 			if [[ -z $var ]]; then

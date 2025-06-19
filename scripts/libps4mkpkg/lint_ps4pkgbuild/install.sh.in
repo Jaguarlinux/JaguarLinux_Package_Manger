@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   changelog.sh - Check the files in the 'changelog' array exist.
+#   install.sh - Check the files in the 'install' array exist.
 #
 #   Copyright (c) 2014-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,34 +18,33 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_CHANGELOG_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_CHANGELOG_SH=1
+[[ -n "$LIBMAKEPKG_LINT_PS4PKGBUILD_INSTALL_SH" ]] && return
+LIBMAKEPKG_LINT_PS4PKGBUILD_INSTALL_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
-source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
-source "$MAKEPKG_LIBRARY/lint_pkgbuild/util.sh"
-
-
-lint_pkgbuild_functions+=('lint_changelog')
+source "$PS4MKPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
+source "$PS4MKPKG_LIBRARY/lint_ps4pkgbuild/util.sh"
 
 
-lint_changelog() {
-	local file changelog_list
+lint_ps4pkgbuild_functions+=('lint_install')
 
-	changelog_list=("${changelog[@]}")
+
+lint_install() {
+	local list file install_list ret=0
+
+	install_list=("${install[@]}")
 	# set pkgname the same way we do for running package(), this way we get
 	# the right value in extract_function_variable
 	local pkgname_backup=(${pkgname[@]})
 	local pkgname
 	for pkgname in "${pkgname_backup[@]}"; do
-		if extract_function_variable "package_$pkgname" changelog 0 file; then
-			changelog_list+=("$file")
-		fi
+		extract_function_variable "package_$pkgname" install 0 file
+		install_list+=("$file")
 	done
 
-	check_files_exist 'changelog' "${changelog_list[@]}" || ret=1
+	check_files_exist 'install' "${install_list[@]}" || ret=1
 
 	return $ret
 }

@@ -21,10 +21,10 @@
 [[ -n "$LIBMAKEPKG_TIDY_EMPTYDIRS_SH" ]] && return
 LIBMAKEPKG_TIDY_EMPTYDIRS_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
-source "$MAKEPKG_LIBRARY/util/option.sh"
+source "$PS4MKPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/option.sh"
 
 
 packaging_options+=('emptydirs')

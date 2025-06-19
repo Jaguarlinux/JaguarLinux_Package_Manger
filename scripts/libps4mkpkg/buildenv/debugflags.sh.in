@@ -22,10 +22,10 @@
 [[ -n "$LIBMAKEPKG_BUILDENV_DEBUGFLAGS_SH" ]] && return
 LIBMAKEPKG_BUILDENV_DEBUGFLAGS_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/option.sh"
-source "$MAKEPKG_LIBRARY/util/util.sh"
+source "$PS4MKPKG_LIBRARY/util/option.sh"
+source "$PS4MKPKG_LIBRARY/util/util.sh"
 
 buildenv_functions+=('buildenv_debugflags')
 

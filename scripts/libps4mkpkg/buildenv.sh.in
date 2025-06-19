@@ -19,15 +19,15 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_BUILDENV_SH" ]] && return
-LIBMAKEPKG_BUILDENV_SH=1
+[[ -n "$LIBPS4MKPKG_BUILDENV_SH" ]] && return
+LIBPS4MKPKG_BUILDENV_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
 declare -a buildenv_functions build_options
 buildenv_vars=('CPPFLAGS' 'CFLAGS' 'CXXFLAGS' 'LDFLAGS')
 
-for lib in "$MAKEPKG_LIBRARY/buildenv/"*.sh; do
+for lib in "$PS4MKPKG_LIBRARY/buildenv/"*.sh; do
 	source "$lib"
 done
 

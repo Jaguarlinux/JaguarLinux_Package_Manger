@@ -18,22 +18,22 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_XDATA_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_XDATA_SH=1
+[[ -n "$LIBMAKEPKG_LINT_PS4PKGBUILD_XDATA_SH" ]] && return
+LIBMAKEPKG_LINT_PS4PKGBUILD_XDATA_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
-source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
+source "$PS4MKPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
 
 
-lint_pkgbuild_functions+=('lint_xdata')
+lint_ps4pkgbuild_functions+=('lint_xdata')
 
 
 lint_xdata() {
 	local xdata_list entry key value ret=0
 
-	get_pkgbuild_all_split_attributes xdata xdata_list
+	get_ps4pkgbuild_all_split_attributes xdata xdata_list
 
 	for entry in "${xdata_list[@]}"; do
 		key="${entry%%=*}"

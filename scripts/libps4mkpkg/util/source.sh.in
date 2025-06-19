@@ -18,12 +18,12 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_UTIL_SOURCE_SH" ]] && return
-LIBMAKEPKG_UTIL_SOURCE_SH=1
+[[ -n "$LIBPS4MKPKG_UTIL_SOURCE_SH" ]] && return
+LIBPS4MKPKG_UTIL_SOURCE_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/message.sh"
 
 
 # a source entry can have two forms :

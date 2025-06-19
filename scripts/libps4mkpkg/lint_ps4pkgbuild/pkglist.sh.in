@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   util.sh - utility functions for pkgbuild linting.
+#   pkglist.sh - Check the packages selected to build exist.
 #
 #   Copyright (c) 2014-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,21 +18,24 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_UTIL_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_UTIL_SH=1
+[[ -n "$LIBMAKEPKG_LINT_PS4PKGBUILD_PKGLIST_SH" ]] && return
+LIBMAKEPKG_LINT_PS4PKGBUILD_PKGLIST_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/util.sh"
 
 
-check_files_exist() {
-	local kind=$1 files=("${@:2}") file ret=0
+lint_ps4pkgbuild_functions+=('lint_pkglist')
 
-	for file in "${files[@]}"; do
-		if [[ $file && ! -f $file ]]; then
-			error "$(gettext "%s file (%s) does not exist or is not a regular file.")" \
-				"$kind" "$file"
+
+lint_pkglist() {
+	local i ret=0
+
+	for i in "${PKGLIST[@]}"; do
+		if ! in_array "$i" "${pkgname[@]}"; then
+			error "$(gettext "Requested package %s is not provided in %s")" "$i" "$BUILDFILE"
 			ret=1
 		fi
 	done

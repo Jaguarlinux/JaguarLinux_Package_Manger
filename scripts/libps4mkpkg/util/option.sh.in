@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_UTIL_OPTION_SH" ]] && return
-LIBMAKEPKG_UTIL_OPTION_SH=1
+[[ -n "$LIBPS4MKPKG_UTIL_OPTION_SH" ]] && return
+LIBPS4MKPKG_UTIL_OPTION_SH=1
 
 
 ##
@@ -73,8 +73,8 @@ check_opt_array() {
 
 
 ##
-# Checks to see if options are present in makepkg.conf or PKGBUILD;
-# PKGBUILD options always take precedence.
+# Checks to see if options are present in ps4mkpkg.conf or PS4PKGBUILD;
+# PS4PKGBUILD options always take precedence.
 #
 #  usage : check_option( $option, $expected_val )
 # return : 0   - matches expected
@@ -100,8 +100,8 @@ check_buildenv() {
 
 
 ##
-# Checks to see if options are present in BUILDENV or PKGBUILD;
-# PKGBUILD options always take precedence.
+# Checks to see if options are present in BUILDENV or PS4PKGBUILD;
+# PS4PKGBUILD options always take precedence.
 #
 #  usage : check_buildoption( $option, $expected_val )
 # return : 0   - matches expected

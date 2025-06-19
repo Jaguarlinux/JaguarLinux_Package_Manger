@@ -1,4 +1,4 @@
-libmakepkg_module = 'integrity'
+libps4mkpkg_module = 'integrity'
 
 sources = [
   'generate_checksum.sh.in',
@@ -8,10 +8,10 @@ sources = [
 ]
 
 foreach src : sources
-  output_dir = join_paths(get_option('datadir'), 'makepkg', libmakepkg_module)
+  output_dir = join_paths(get_option('datadir'), 'ps4mkpkg', libps4mkpkg_module)
 
   custom_target(
-    libmakepkg_module + '_' + src.underscorify(),
+    libps4mkpkg_module + '_' + src.underscorify(),
     command : [ SCRIPT_EDITOR, '@INPUT@', '@OUTPUT@' ],
     input : src,
     output : '@BASENAME@',

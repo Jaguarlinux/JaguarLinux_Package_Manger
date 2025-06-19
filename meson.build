@@ -24,7 +24,7 @@ ROOTDIR = get_option('root-dir')
 BINDIR = join_paths(PREFIX, get_option('bindir'))
 MANDIR = join_paths(PREFIX, get_option('mandir'))
 BUILDSCRIPT = get_option('buildscript')
-LIBMAKEPKGDIR = join_paths(PREFIX, DATAROOTDIR, 'makepkg')
+LIBPS4MKPKGDIR = join_paths(PREFIX, DATAROOTDIR, 'ps4mkpkg')
 PKGDATADIR = join_paths(PREFIX, DATAROOTDIR, meson.project_name())
 KEYRINGDIR = join_paths(PREFIX, DATAROOTDIR, get_option('keyringdir'))
 
@@ -291,11 +291,11 @@ substs.set('BASH', BASH.full_path())
 substs.set('PACKAGE_VERSION', PACKAGE_VERSION)
 substs.set('PACKAGE_NAME', meson.project_name())
 substs.set('BUILDSCRIPT', BUILDSCRIPT)
-substs.set('TEMPLATE_DIR', get_option('makepkg-template-dir'))
+substs.set('TEMPLATE_DIR', get_option('ps4mkpkg-template-dir'))
 substs.set('DEBUGSUFFIX', get_option('debug-suffix'))
 substs.set('INODECMD', inodecmd)
 substs.set('FILECMD', filecmd)
-substs.set('LIBMAKEPKGDIR', LIBMAKEPKGDIR)
+substs.set('LIBPS4MKPKGDIR', LIBPS4MKPKGDIR)
 substs.set('STRIP_BINARIES', strip_binaries)
 substs.set('STRIP_SHARED', strip_shared)
 substs.set('STRIP_STATIC', strip_static)
@@ -416,24 +416,24 @@ foreach wrapper : script_wrappers
 endforeach
 
 configure_file(
-  input : 'etc/makepkg.conf.in',
-  output : 'makepkg.conf',
+  input : 'etc/ps4mkpkg.conf.in',
+  output : 'ps4mkpkg.conf',
   configuration : substs,
   install_dir : SYSCONFDIR)
 
 configure_file(
-  input : 'etc/makepkg.conf.d/fortran.conf.in',
+  input : 'etc/ps4mkpkg.conf.d/fortran.conf.in',
   output : 'fortran.conf',
   configuration : substs,
-  install_dir : join_paths(SYSCONFDIR, 'makepkg.conf.d/'))
+  install_dir : join_paths(SYSCONFDIR, 'ps4mkpkg.conf.d/'))
 
 configure_file(
-  input : 'etc/makepkg.conf.d/rust.conf.in',
+  input : 'etc/ps4mkpkg.conf.d/rust.conf.in',
   output : 'rust.conf',
   configuration : substs,
-  install_dir : join_paths(SYSCONFDIR, 'makepkg.conf.d/'))
+  install_dir : join_paths(SYSCONFDIR, 'ps4mkpkg.conf.d/'))
 
-install_emptydir(join_paths(SYSCONFDIR, 'makepkg.d/'))
+install_emptydir(join_paths(SYSCONFDIR, 'ps4mkpkg.d/'))
 
 configure_file(
   input : 'etc/ps4.conf.in',
@@ -451,7 +451,7 @@ install_data(
 foreach path : [
 	join_paths(LOCALSTATEDIR, 'lib/ps4/'),
 	join_paths(LOCALSTATEDIR, 'cache/ps4/pkg/'),
-	join_paths(DATAROOTDIR, 'makepkg-template/'),
+	join_paths(DATAROOTDIR, 'ps4mkpkg-template/'),
 	join_paths(DATAROOTDIR, 'libalpm/hooks/'),
 	]
 	meson.add_install_script('sh', '-c', 'mkdir -p "$DESTDIR/@0@"'.format(path))
@@ -459,7 +459,7 @@ endforeach
 
 TEST_ENV = environment()
 TEST_ENV.set('PMTEST_SCRIPTLIB_DIR', join_paths(meson.project_source_root(), 'scripts/library/'))
-TEST_ENV.set('PMTEST_LIBMAKEPKG_DIR', join_paths(meson.project_build_root(), 'scripts/libmakepkg/'))
+TEST_ENV.set('PMTEST_LIBPS4MKPKG_DIR', join_paths(meson.project_build_root(), 'scripts/libps4mkpkg/'))
 TEST_ENV.set('PMTEST_UTIL_DIR', meson.project_build_root() + '/')
 TEST_ENV.set('PMTEST_SCRIPT_DIR', join_paths(meson.project_build_root(), 'scripts/'))
 
@@ -491,7 +491,7 @@ message('\n    '.join([
   '   package extension       : @0@'.format(get_option('pkg-ext')),
   '   source pkg extension    : @0@'.format(get_option('src-ext')),
   '   build script name       : @0@'.format(BUILDSCRIPT),
-  '   template directory      : @0@'.format(get_option('makepkg-template-dir')),
+  '   template directory      : @0@'.format(get_option('ps4mkpkg-template-dir')),
   '',
   'Compilation options:',
   '  i18n support             : @0@'.format(get_option('i18n')),

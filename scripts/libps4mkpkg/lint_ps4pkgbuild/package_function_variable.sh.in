@@ -18,18 +18,18 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_PACKAGE_FUNCTION_VARIABLE_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_PACKAGE_FUNCTION_VARIABLE_SH=1
+[[ -n "$LIBMAKEPKG_LINT_PS4PKGBUILD_PACKAGE_FUNCTION_VARIABLE_SH" ]] && return
+LIBMAKEPKG_LINT_PS4PKGBUILD_PACKAGE_FUNCTION_VARIABLE_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
-source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
-source "$MAKEPKG_LIBRARY/util/schema.sh"
-source "$MAKEPKG_LIBRARY/util/util.sh"
+source "$PS4MKPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
+source "$PS4MKPKG_LIBRARY/util/schema.sh"
+source "$PS4MKPKG_LIBRARY/util/util.sh"
 
 
-lint_pkgbuild_functions+=('lint_package_function_variable')
+lint_ps4pkgbuild_functions+=('lint_package_function_variable')
 
 
 lint_package_function_variable() {
@@ -40,8 +40,8 @@ lint_package_function_variable() {
 		for a in ${arch[@]}; do
 			[[ $a == "any" ]] && continue
 
-			for i in ${pkgbuild_schema_arrays[@]} ${pkgbuild_schema_strings[@]}; do
-				in_array "$i" ${pkgbuild_schema_package_overrides[@]} && continue
+			for i in ${ps4pkgbuild_schema_arrays[@]} ${pkgbuild_schema_strings[@]}; do
+				in_array "$i" ${ps4pkgbuild_schema_package_overrides[@]} && continue
 				if exists_function_variable "package_$pkg" "${i}_${a}"; then
 					error "$(gettext "%s can not be set inside a package function")" "${i}_${a}"
 					ret=1
@@ -49,8 +49,8 @@ lint_package_function_variable() {
 			done
 		done
 
-		for i in ${pkgbuild_schema_arrays[@]} ${pkgbuild_schema_strings[@]}; do
-			in_array "$i" ${pkgbuild_schema_package_overrides[@]} && continue
+		for i in ${ps4pkgbuild_schema_arrays[@]} ${ps4pkgbuild_schema_strings[@]}; do
+			in_array "$i" ${ps4pkgbuild_schema_package_overrides[@]} && continue
 			if exists_function_variable "package_$pkg" "$i"; then
 				error "$(gettext "%s can not be set inside a package function")" "$i"
 				ret=1

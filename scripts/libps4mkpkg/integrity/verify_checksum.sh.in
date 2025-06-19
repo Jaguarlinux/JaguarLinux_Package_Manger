@@ -21,12 +21,12 @@
 [[ -n "$LIBMAKEPKG_INTEGRITY_VERIFY_CHECKSUM_SH" ]] && return
 LIBMAKEPKG_INTEGRITY_CHECKSUM_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
-source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
-source "$MAKEPKG_LIBRARY/util/schema.sh"
-source "$MAKEPKG_LIBRARY/source.sh"
+source "$PS4MKPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/pkgbuild.sh"
+source "$PS4MKPKG_LIBRARY/util/schema.sh"
+source "$PS4MKPKG_LIBRARY/source.sh"
 
 check_checksums() {
 	local integ a

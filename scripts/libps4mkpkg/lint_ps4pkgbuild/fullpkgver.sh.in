@@ -18,14 +18,14 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_FULLPKGVER_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_FULLPKGVER_SH=1
+[[ -n "$LIBMAKEPKG_LINT_PS4PKGBUILD_FULLPKGVER_SH" ]] && return
+LIBMAKEPKG_LINT_PS4PKGBUILD_FULLPKGVER_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/lint_pkgbuild/epoch.sh"
-source "$MAKEPKG_LIBRARY/lint_pkgbuild/pkgrel.sh"
-source "$MAKEPKG_LIBRARY/lint_pkgbuild/pkgver.sh"
+source "$PS4MKPKG_LIBRARY/lint_ps4pkgbuild/epoch.sh"
+source "$PS4MKPKG_LIBRARY/lint_ps4pkgbuild/pkgrel.sh"
+source "$PS4MKPKG_LIBRARY/lint_ps4pkgbuild/pkgver.sh"
 
 
 check_fullpkgver() {

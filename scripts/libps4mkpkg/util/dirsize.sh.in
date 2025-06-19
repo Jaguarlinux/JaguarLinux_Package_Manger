@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_UTIL_DIRSIZE_SH" ]] && return
-LIBMAKEPKG_UTIL_DIRSIZE_SH=1
+[[ -n "$LIBPS4MKPKG_UTIL_DIRSIZE_SH" ]] && return
+LIBPS4MKPKG_UTIL_DIRSIZE_SH=1
 
 
 # find the total filesize of all files in the current directory while only

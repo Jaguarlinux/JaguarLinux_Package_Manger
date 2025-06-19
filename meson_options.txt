@@ -21,7 +21,7 @@ option('ldconfig', type : 'string', value : '/sbin/ldconfig',
        description : 'set the full path to ldconfig')
 
 option('buildscript', type : 'string', value : 'PKGBUILD',
-       description : 'set the build script name used by makepkg')
+       description : 'set the build script name used by ps4mkpkg')
 
 option('datarootdir', type : 'string', value : 'share',
        description : 'FIXME')
@@ -29,11 +29,11 @@ option('datarootdir', type : 'string', value : 'share',
 option('keyringdir', type : 'string', value: 'ps4/keyrings',
 	description : 'Where to look for keyring files under datarootdir')
 
-option('makepkg-template-dir', type : 'string', value : '/usr/share/makepkg-template',
-       description : 'template dir used by makepkg-template')
+option('ps4mkpkg-template-dir', type : 'string', value : '/usr/share/ps4mkpkg-template',
+       description : 'template dir used by ps4mkpkg-template')
 
 option('debug-suffix', type : 'string', value : 'debug',
-       description : 'suffix for split debugging symbol packages used by makepkg')
+       description : 'suffix for split debugging symbol packages used by ps4mkpkg')
 
 # dependencies, features
 option('doc', type : 'feature', value : 'auto',

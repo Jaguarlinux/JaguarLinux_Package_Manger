@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   pkgbuild.sh - functions to extract information from PKGBUILD files
+#   PS4PKGBUILD.sh - functions to extract information from PS4PKGBUILD files
 #
 #   Copyright (c) 2009-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,12 +18,12 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_UTIL_PKGBUILD_SH" ]] && return
-LIBMAKEPKG_UTIL_PKGBUILD_SH=1
+[[ -n "$LIBPS4MKPKG_UTIL_PS4PKGBUILD_SH" ]] && return
+LIBPS4MKPKG_UTIL_PS4PKGBUILD_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/schema.sh"
+source "$PS4MKPKG_LIBRARY/util/schema.sh"
 
 
 have_function() {
@@ -111,7 +111,7 @@ exists_function_variable() {
 		extract_function_variable "$funcname" "$attr" 1 out
 }
 
-get_pkgbuild_attribute() {
+get_ps4pkgbuild_attribute() {
 	# $1: package name
 	# $2: attribute name
 	# $3: multivalued
@@ -133,7 +133,7 @@ get_pkgbuild_attribute() {
 	fi
 }
 
-get_pkgbuild_all_split_attributes() {
+get_ps4pkgbuild_all_split_attributes() {
 	local attrname=$1 outputvar=$2 all_list list name a
 
 	if extract_global_variable "$attrname" 1 list; then
@@ -185,7 +185,7 @@ get_pkg_arch() {
 		fi
 	else
 		local arch_override
-		get_pkgbuild_attribute "$1" arch 1 arch_override
+		get_ps4pkgbuild_attribute "$1" arch 1 arch_override
 		(( ${#arch_override[@]} == 0 )) && arch_override=("${arch[@]}")
 		if [[ $arch_override = "any" ]]; then
 			printf "%s\n" "any"

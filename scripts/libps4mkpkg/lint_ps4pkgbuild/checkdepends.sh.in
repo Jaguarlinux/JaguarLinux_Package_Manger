@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   conflicts.sh - Check the 'conflicts' array conforms to requirements.
+#   checkdepends.sh - Check the 'checkdepends' array conforms to requirements.
 #
 #   Copyright (c) 2014-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,35 +18,35 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_CONFLICTS_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_CONFLICTS_SH=1
+[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_CHECKDEPENDS_SH" ]] && return
+LIBMAKEPKG_LINT_PKGBUILD_CHECKDEPENDS_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/lint_pkgbuild/fullpkgver.sh"
-source "$MAKEPKG_LIBRARY/lint_pkgbuild/pkgname.sh"
-source "$MAKEPKG_LIBRARY/util/message.sh"
-source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
-
-
-lint_pkgbuild_functions+=('lint_conflicts')
+source "$PS4MKPKG_LIBRARY/lint_pkgbuild/fullpkgver.sh"
+source "$PS4MKPKG_LIBRARY/lint_pkgbuild/pkgname.sh"
+source "$PS4MKPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/pkgbuild.sh"
 
 
-lint_conflicts() {
-	local conflicts_list conflict name ver ret=0
+lint_pkgbuild_functions+=('lint_checkdepends')
 
-	get_pkgbuild_all_split_attributes conflicts conflicts_list
+
+lint_checkdepends() {
+	local checkdepends_list checkdepend name ver ret=0
+
+	get_pkgbuild_all_split_attributes checkdepends checkdepends_list
 
 	# this function requires extglob - save current status to restore later
 	local shellopts=$(shopt -p extglob)
 	shopt -s extglob
 
-	for conflict in "${conflicts_list[@]}"; do
-		name=${conflict%%@(<|>|=|>=|<=)*}
-		lint_one_pkgname conflicts "$name" || ret=1
-		if [[ $name != "$conflict" ]]; then
-			ver=${conflict##$name@(<|>|=|>=|<=)}
-			check_fullpkgver "$ver" conflicts || ret=1
+	for checkdepend in "${checkdepends_list[@]}"; do
+		name=${checkdepend%%@(<|>|=|>=|<=)*}
+		lint_one_pkgname checkdepends "$name" || ret=1
+		if [[ $name != "$checkdepend" ]]; then
+			ver=${checkdepend##$name@(<|>|=|>=|<=)}
+			check_fullpkgver "$ver" checkdepends || ret=1
 		fi
 	done
 

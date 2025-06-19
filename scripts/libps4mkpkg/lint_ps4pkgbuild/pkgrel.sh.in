@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   pkgver.sh - Check the 'pkgver' variable conforms to requirements.
+#   pkgrel.sh - Check the 'pkgrel' variable conforms to requirements.
 #
 #   Copyright (c) 2014-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,36 +18,30 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_PKGVER_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_PKGVER_SH=1
+[[ -n "$LIBMAKEPKG_LINT_PS4PKGBUILD_PKGREL_SH" ]] && return
+LIBMAKEPKG_LINT_PS4PKGBUILD_PKGREL_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
-
-
-lint_pkgbuild_functions+=('lint_pkgver')
+source "$PS4MKPKG_LIBRARY/util/message.sh"
 
 
-check_pkgver() {
-	local ver=$1 type=$2
+lint_ps4pkgbuild_functions+=('lint_pkgrel')
 
-	if [[ -z $ver ]]; then
-		error "$(gettext "%s is not allowed to be empty.")" "pkgver${type:+ in $type}"
+
+check_pkgrel() {
+	local rel=$1 type=$2
+	if [[ -z $rel ]]; then
+		error "$(gettext "%s is not allowed to be empty.")" "pkgrel${type:+ in $type}"
 		return 1
 	fi
 
-	if [[ $ver = *[[:space:]/:-]* ]]; then
-		error "$(gettext "%s is not allowed to contain colons, forward slashes, hyphens or whitespace.")" "pkgver${type:+ in $type}"
-		return 1
-	fi
-
-	if [[ $ver = *[![:ascii:]]* ]]; then
-		error "$(gettext "%s may only contain ascii characters.")" "pkgver${type:+ in $type}"
+	if [[ $rel != +([0-9])?(.+([0-9])) ]]; then
+		error "$(gettext "%s must be of the form 'integer[.integer]', not %s.")" "pkgrel${type:+ in $type}" "$rel"
 		return 1
 	fi
 }
 
-lint_pkgver() {
-	check_pkgver "$pkgver"
+lint_pkgrel() {
+	check_pkgrel "$pkgrel"
 }

@@ -21,7 +21,7 @@
 [[ -n "$LIBMAKEPKG_AUTODEP_LIBRARY_PROVIDES_SH" ]] && return
 LIBMAKEPKG_AUTODEP_LIBRARY_PROVIDES_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
 autodep_functions+=('library_provides')
 

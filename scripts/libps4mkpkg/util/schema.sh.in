@@ -18,32 +18,32 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_SCHEMA_SH" ]] && return
-LIBMAKEPKG_SCHEMA_SH=1
+[[ -n "$LIBPS4MKPKG_SCHEMA_SH" ]] && return
+LIBPS4MKPKG_SCHEMA_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/util.sh"
+source "$PS4MKPKG_LIBRARY/util/util.sh"
 
 
 known_hash_algos=({ck,md5,sha{1,224,256,384,512},b2})
 
-pkgbuild_schema_arrays=(arch backup checkdepends conflicts depends groups
+ps4pkgbuild_schema_arrays=(arch backup checkdepends conflicts depends groups
                         license makedepends noextract optdepends options
                         provides replaces source validpgpkeys xdata
                         "${known_hash_algos[@]/%/sums}")
 
-pkgbuild_schema_strings=(changelog epoch install pkgbase pkgdesc pkgrel pkgver
+ps4pkgbuild_schema_strings=(changelog epoch install pkgbase pkgdesc pkgrel pkgver
                          url)
 
-pkgbuild_schema_arch_arrays=(checkdepends conflicts depends makedepends
+ps4pkgbuild_schema_arch_arrays=(checkdepends conflicts depends makedepends
                              optdepends provides replaces source
                              "${known_hash_algos[@]/%/sums}")
 
-pkgbuild_schema_package_overrides=(pkgdesc arch url license groups depends
+ps4pkgbuild_schema_package_overrides=(pkgdesc arch url license groups depends
                                    optdepends provides conflicts replaces
                                    backup options install changelog)
 
-readonly -a known_hash_algos pkgbuild_schema_arrays \
-	pkgbuild_schema_strings pkgbuild_schema_arch_arrays \
-	pkgbuild_schema_package_overrides
+readonly -a known_hash_algos ps4pkgbuild_schema_arrays \
+	ps4pkgbuild_schema_strings ps4pkgbuild_schema_arch_arrays \
+	ps4pkgbuild_schema_package_overrides

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   pkgrel.sh - Check the 'pkgrel' variable conforms to requirements.
+#   source.sh - Check the 'source' array is not sparse.
 #
 #   Copyright (c) 2014-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,30 +18,22 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_PKGREL_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_PKGREL_SH=1
+[[ -n "$LIBMAKEPKG_LINT_PS4PKGBUILD_SOURCE_SH" ]] && return
+LIBMAKEPKG_LINT_PS4PKGBUILD_SOURCE_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
-
-
-lint_pkgbuild_functions+=('lint_pkgrel')
+source "$PS4MKPKG_LIBRARY/util/message.sh"
 
 
-check_pkgrel() {
-	local rel=$1 type=$2
-	if [[ -z $rel ]]; then
-		error "$(gettext "%s is not allowed to be empty.")" "pkgrel${type:+ in $type}"
+lint_ps4pkgbuild_functions+=('lint_source')
+
+
+lint_source() {
+	local idx=("${!source[@]}")
+
+	if (( ${#source[*]} > 0 && (${idx[@]: -1} + 1) != ${#source[*]} )); then
+		error "$(gettext "Sparse arrays are not allowed for source")"
 		return 1
 	fi
-
-	if [[ $rel != +([0-9])?(.+([0-9])) ]]; then
-		error "$(gettext "%s must be of the form 'integer[.integer]', not %s.")" "pkgrel${type:+ in $type}" "$rel"
-		return 1
-	fi
-}
-
-lint_pkgrel() {
-	check_pkgrel "$pkgrel"
 }

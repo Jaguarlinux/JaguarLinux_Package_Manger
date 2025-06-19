@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   pkgbase.sh - Check the 'pkgbase' variable conforms to requirements.
+#   backup.sh - Check the 'backup' array conforms to requirements.
 #
 #   Copyright (c) 2014-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,22 +18,34 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_PKGBASE_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_PKGBASE_SH=1
+[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_BACKUP_SH" ]] && return
+LIBMAKEPKG_LINT_PKGBUILD_BACKUP_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/lint_pkgbuild/pkgname.sh"
-source "$MAKEPKG_LIBRARY/util/message.sh"
-
-
-lint_pkgbuild_functions+=('lint_pkgbase')
+source "$PS4MKPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/pkgbuild.sh"
 
 
-lint_pkgbase() {
-	if [[ -z $pkgbase ]]; then
-		return 0
-	fi
+lint_pkgbuild_functions+=('lint_backup')
 
-	lint_one_pkgname "pkgbase" "$pkgbase"
+
+lint_backup() {
+	local list name backup_list ret=0
+
+	backup_list=("${backup[@]}")
+	for name in "${pkgname[@]}"; do
+		if extract_function_variable "package_$name" backup 1 list; then
+			backup_list+=("${list[@]}")
+		fi
+	done
+
+	for name in "${backup_list[@]}"; do
+		if [[ ${name:0:1} = "/" ]]; then
+			error "$(gettext "%s entry should not contain leading slash : %s")" "backup" "$name"
+			ret=1
+		fi
+	done
+
+	return $ret
 }

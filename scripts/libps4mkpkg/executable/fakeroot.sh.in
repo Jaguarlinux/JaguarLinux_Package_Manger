@@ -21,9 +21,9 @@
 [[ -n "$LIBMAKEPKG_EXECUTABLE_FAKEROOT_SH" ]] && return
 LIBMAKEPKG_EXECUTABLE_FAKEROOT_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/message.sh"
 
 executable_functions+=('executable_fakeroot')
 

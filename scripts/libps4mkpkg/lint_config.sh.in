@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-#   lint_config.sh - functions for checking for makepkg.conf errors
+#   lint_config.sh - functions for checking for ps4mkpkg.conf errors
 #
 #   Copyright (c) 2018-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,18 +18,18 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_CONFIG_SH" ]] && return
-LIBMAKEPKG_LINT_CONFIG_SH=1
+[[ -n "$LIBPS4MKPKG_LINT_CONFIG_SH" ]] && return
+LIBPS4MKPKG_LINT_CONFIG_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'/usr/share/ps4mkpkg'}
 
-source "$MAKEPKG_LIBRARY/util/message.sh"
-source "$MAKEPKG_LIBRARY/util/util.sh"
+source "$PS4MKPKG_LIBRARY/util/message.sh"
+source "$PS4MKPKG_LIBRARY/util/util.sh"
 
 
 declare -a lint_config_functions
 
-for lib in "$MAKEPKG_LIBRARY/lint_config/"*.sh; do
+for lib in "$PS4MKPKG_LIBRARY/lint_config/"*.sh; do
 	source "$lib"
 done
 

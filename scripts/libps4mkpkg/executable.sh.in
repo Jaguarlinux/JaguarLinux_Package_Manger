@@ -18,14 +18,14 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_EXECUTABLE_SH" ]] && return
-LIBMAKEPKG_EXECUTABLE_SH=1
+[[ -n "$LIBPS4MKPKG_EXECUTABLE_SH" ]] && return
+LIBPS4MKPKG_EXECUTABLE_SH=1
 
-MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
 declare -a executable_functions
 
-for lib in "$MAKEPKG_LIBRARY/executable/"*.sh; do
+for lib in "$PS4MKPKG_LIBRARY/executable/"*.sh; do
 	source "$lib"
 done
 
