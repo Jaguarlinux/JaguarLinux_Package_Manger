@@ -1,6 +1,6 @@
 project('ps4',
         'c',
-        version : '7.0.0',
+        version : '1.0.0B',
         license : 'GPLv2+',
         default_options : [
           'c_std=gnu99',
