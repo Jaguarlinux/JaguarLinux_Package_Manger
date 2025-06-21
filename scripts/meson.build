@@ -64,7 +64,7 @@ subdir('libps4mkpkg')
 
 configure_file(
 	configuration : { 'libps4mkpkgdir': LIBPS4MKPKGDIR, 'PACKAGE_VERSION': PACKAGE_VERSION },
-	input : 'ps4makpkg.pc.in',
+	input : 'ps4mkpkg.pc.in',
 	output : '@BASENAME@',
 	install_dir : join_paths(DATAROOTDIR, 'pkgconfig'))
 
