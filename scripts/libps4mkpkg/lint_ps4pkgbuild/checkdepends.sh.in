@@ -23,8 +23,8 @@ LIBPS4MKPKG_LINT_PKGBUILD_CHECKDEPENDS_SH=1
 
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
-source "$PS4MKPKG_LIBRARY/lint_pkgbuild/fullpkgver.sh"
-source "$PS4MKPKG_LIBRARY/lint_pkgbuild/pkgname.sh"
+source "$PS4MKPKG_LIBRARY/lint_ps4pkgbuild/fullpkgver.sh"
+source "$PS4MKPKG_LIBRARY/lint_ps4pkgbuild/pkgname.sh"
 source "$PS4MKPKG_LIBRARY/util/message.sh"
 source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
 
