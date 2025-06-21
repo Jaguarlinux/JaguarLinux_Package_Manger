@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_SOURCE_FOSSIL_SH" ]] && return
-LIBMAKEPKG_SOURCE_FOSSIL_SH=1
+[[ -n "$LIBPS4MKPKG_SOURCE_FOSSIL_SH" ]] && return
+LIBPS4MKPKG_SOURCE_FOSSIL_SH=1
 
 
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}

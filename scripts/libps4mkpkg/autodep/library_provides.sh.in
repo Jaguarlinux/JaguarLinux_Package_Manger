@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_AUTODEP_LIBRARY_PROVIDES_SH" ]] && return
-LIBMAKEPKG_AUTODEP_LIBRARY_PROVIDES_SH=1
+[[ -n "$LIBPS4MKPKG_AUTODEP_LIBRARY_PROVIDES_SH" ]] && return
+LIBPS4MKPKG_AUTODEP_LIBRARY_PROVIDES_SH=1
 
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 

@@ -24,7 +24,7 @@ LIBPS4MKPKG_SOURCE_SH=1
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
 source "$PS4MKPKG_LIBRARY/util/message.sh"
-source "$PS4MKPKG_LIBRARY/util/pkgbuild.sh"
+source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
 source "$PS4MKPKG_LIBRARY/util/source.sh"
 
 

@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_BUILDENV_FORTRAN_SH" ]] && return
-LIBMAKEPKG_BUILDENV_FORTRAN_SH=1
+[[ -n "$LIBPS4MKPKG_BUILDENV_FORTRAN_SH" ]] && return
+LIBPS4MKPKG_BUILDENV_FORTRAN_SH=1
 
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 

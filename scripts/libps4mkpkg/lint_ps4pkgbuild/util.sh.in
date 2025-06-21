@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PS4PKGBUILD_UTIL_SH" ]] && return
-LIBMAKEPKG_LINT_PS4PKGBUILD_UTIL_SH=1
+[[ -n "$LIBPS4MKPKG_LINT_PS4PKGBUILD_UTIL_SH" ]] && return
+LIBPS4MKPKG_LINT_PS4PKGBUILD_UTIL_SH=1
 
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 

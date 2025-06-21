@@ -18,18 +18,18 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_ARCH_SPECIFIC_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_ARCH_SPECIFIC_SH=1
+[[ -n "$LIBPS4MKPKG_LINT_PS4PKGBUILD_ARCH_SPECIFIC_SH" ]] && return
+LIBPS4MKPKG_LINT_PS4PKGBUILD_ARCH_SPECIFIC_SH=1
 
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
 source "$PS4MKPKG_LIBRARY/util/message.sh"
-source "$PS4MKPKG_LIBRARY/util/pkgbuild.sh"
+source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
 source "$PS4MKPKG_LIBRARY/util/schema.sh"
 source "$PS4MKPKG_LIBRARY/util/util.sh"
 
 
-lint_pkgbuild_functions+=('lint_arch_specific')
+lint_ps4pkgbuild_functions+=('lint_arch_specific')
 
 
 lint_arch_specific() {
@@ -38,7 +38,7 @@ lint_arch_specific() {
 	# global variables
 	for a in ${arch[@]}; do
 		if [[ $a == "any" ]]; then
-			for i in ${pkgbuild_schema_arch_arrays[@]}; do
+			for i in ${ps4pkgbuild_schema_arch_arrays[@]}; do
 				if declare -p "${i}_${a}" > /dev/null 2>&1; then
 					error "$(gettext "Can not provide architecture specific variables for the '%s' architecture: %s")" "any" "${i}_${a}"
 					ret=1
@@ -46,8 +46,8 @@ lint_arch_specific() {
 			done
 		fi
 
-		for i in ${pkgbuild_schema_arrays[@]} ${pkgbuild_schema_strings[@]}; do
-			in_array "$i" ${pkgbuild_schema_arch_arrays[@]} && continue
+		for i in ${ps4pkgbuild_schema_arrays[@]} ${ps4pkgbuild_schema_strings[@]}; do
+			in_array "$i" ${ps4pkgbuild_schema_arch_arrays[@]} && continue
 			v="${i}_${a}"
 			if declare -p "$v" > /dev/null 2>&1; then
 				error "$(gettext "%s can not be architecture specific: %s")" "$i" "${i}_${a}"
@@ -60,7 +60,7 @@ lint_arch_specific() {
 	for pkg in ${pkgname[@]}; do
 		for a in ${arch[@]}; do
 			if [[ $a == "any" ]]; then
-				for i in ${pkgbuild_schema_arch_arrays[@]}; do
+				for i in ${ps4pkgbuild_schema_arch_arrays[@]}; do
 					if exists_function_variable "package_$pkg" "${i}_${a}"; then
 						error "$(gettext "Can not provide architecture specific variables for the '%s' architecture: %s")" "any" "${i}_${a}"
 						ret=1
@@ -68,8 +68,8 @@ lint_arch_specific() {
 				done
 			fi
 
-			for i in ${pkgbuild_schema_arrays[@]} ${pkgbuild_schema_strings[@]}; do
-				in_array "$i" ${pkgbuild_schema_arch_arrays[@]} && continue
+			for i in ${ps4pkgbuild_schema_arrays[@]} ${ps4pkgbuild_schema_strings[@]}; do
+				in_array "$i" ${ps4pkgbuild_schema_arch_arrays[@]} && continue
 				if exists_function_variable "package_$pkg" "${i}_${a}"; then
 					error "$(gettext "%s can not be architecture specific: %s")" "$i" "${i}_${a}"
 					ret=1

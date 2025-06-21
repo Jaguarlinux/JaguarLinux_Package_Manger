@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_EXECUTABLE_VCS_SH" ]] && return
-LIBMAKEPKG_EXECUTABLE_VCS_SH=1
+[[ -n "$LIBPS4MKPKG_EXECUTABLE_VCS_SH" ]] && return
+LIBPS4MKPKG_EXECUTABLE_VCS_SH=1
 
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
@@ -65,10 +65,10 @@ executable_vcs() {
 
 	# we currently only use global depends/makedepends arrays for --syncdeps
 	for attr in depends makedepends; do
-		get_pkgbuild_attribute "$pkg" "$attr" 1 'deps'
+		get_ps4pkgbuild_attribute "$pkg" "$attr" 1 'deps'
 		all_deps+=("${deps[@]}")
 
-		get_pkgbuild_attribute "$pkg" "${attr}_$CARCH" 1 'deps'
+		get_ps4pkgbuild_attribute "$pkg" "${attr}_$CARCH" 1 'deps'
 		all_deps+=("${deps[@]}")
 	done
 

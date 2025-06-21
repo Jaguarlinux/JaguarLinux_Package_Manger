@@ -18,13 +18,13 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_INTEGRITY_VERIFY_SIGNATURE_SH" ]] && return
-LIBMAKEPKG_INTEGRITY_VERIFY_SIGNATURE_SH=1
+[[ -n "$LIBPS4MKPKG_INTEGRITY_VERIFY_SIGNATURE_SH" ]] && return
+LIBPS4MKPKG_INTEGRITY_VERIFY_SIGNATURE_SH=1
 
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
 source "$PS4MKPKG_LIBRARY/util/message.sh"
-source "$PS4MKPKG_LIBRARY/util/pkgbuild.sh"
+source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
 
 # Filter the contents of a GnuPG statusfile to only contain understood terms to narrow the file's scope and circumvent
 # the use of terms (e.g. NOTATION_DATA) that may contain unescaped binary data

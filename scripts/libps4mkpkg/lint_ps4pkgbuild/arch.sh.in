@@ -18,16 +18,16 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_ARCH_SH" ]] && return
-LIBMAKEPKG_LINT_PKGBUILD_ARCH_SH=1
+[[ -n "$LIBPS4MKPKG_LINT_PS4PKGBUILD_ARCH_SH" ]] && return
+LIBPS4MKPKG_LINT_PS4PKGBUILD_ARCH_SH=1
 
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
 source "$PS4MKPKG_LIBRARY/util/message.sh"
-source "$PS4MKPKG_LIBRARY/util/pkgbuild.sh"
+source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
 
 
-lint_pkgbuild_functions+=('lint_arch')
+lint_ps4pkgbuild_functions+=('lint_arch')
 
 
 validate_arch() {
@@ -74,7 +74,7 @@ lint_arch() {
 
 	if (( ret == 0 )); then
 		for name in "${pkgname[@]}"; do
-			get_pkgbuild_attribute "$name" 'arch' 1 list
+			get_ps4pkgbuild_attribute "$name" 'arch' 1 list
 			validate_arch "$name" "${list[@]}"
 		done
 	fi
