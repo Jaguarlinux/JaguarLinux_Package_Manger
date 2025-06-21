@@ -8,7 +8,7 @@ manpages = [
   { 'name': 'testpkg.8' },
   { 'name': 'pacman-key.8' },
   { 'name': 'pacman-db-upgrade.8' },
-  { 'name': 'PKGBUILD.5', 'extra_depends' : [ 'PKGBUILD-example.txt' ] },
+  { 'name': 'PS4PKGBUILD.5', 'extra_depends' : [ 'PS4PKGBUILD-example.txt' ] },
   { 'name': 'makepkg.conf.5' },
   { 'name': 'pacman.conf.5' },
   { 'name': 'BUILDINFO.5' },

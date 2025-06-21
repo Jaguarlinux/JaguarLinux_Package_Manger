@@ -688,7 +688,7 @@ _ps4_key_list() {
 _ps4mkpkg_shortopts=(
 	'-s[Install missing dependencies with ps4]'
 	'-i[Install package after successful build]'
-	'-A[Ignore incomplete arch field in PKGBUILD]'
+	'-A[Ignore incomplete arch field in PS4PKGBUILD]'
 	'-c[Clean up work files after build]'
 	'-C[Remove $srcdir/ dir before building the package]'
 	'-d[Skip all dependency checks]'
@@ -699,7 +699,7 @@ _ps4mkpkg_shortopts=(
 	'-L[Log package build process]'
 	'-m[Disable colorized output messages]'
 	'-o[Download and extract files only]'
-	'-p[Use an alternate build script (instead of 'PKGBUILD')]: :_files'
+	'-p[Use an alternate build script (instead of 'PS4PKGBUILD')]: :_files'
 	'-r[Remove installed dependencies after a successful build]'
 	'-R[Repackage contents of the package without rebuilding]'
 	'-S[Generate a source-only tarball without downloading sources]'
@@ -712,7 +712,7 @@ _ps4mkpkg_action_none(){
 		"$_ps4mkpkg_longopts[@]"
 }
 _ps4mkpkg_longopts=(
-	'--ignorearch[Ignore incomplete arch field in PKGBUILD]'
+	'--ignorearch[Ignore incomplete arch field in PS4PKGBUILD]'
 	'--clean[Clean up work files after build]'
 	'--cleanbuild[Remove $srcdir/ dir before building the package]'
 	'--nodeps[Skip all dependency checks]'
@@ -730,13 +730,13 @@ _ps4mkpkg_longopts=(
 	'--source[Generate a source-only tarball without downloading sources]'
 	'--version[Show version information and exit]'
 	'--allsource[Generate a source-only tarball including downloaded source]'
-	'--check[Run check() function in the PKGBUILD]'
+	'--check[Run check() function in the PS4PKGBUILD]'
 	'--config[Use an alternate config file instead of '@sysconfdir@/ps4mkpkg.conf']: :_files'
 	'--holdver[Do not update VCS sources]'
 	'--key[Specify key to use for gpg signing instead of the default]: :_ps4_key_list'
 	'--noarchive[Do not create package archive]'
-	'--nocheck[Do not run the check() function in the PKGBUILD]'
-	'--noprepare[Do not run the prepare() function in the PKGBUILD]'
+	'--nocheck[Do not run the check() function in the PS4PKGBUILD]'
+	'--noprepare[Do not run the prepare() function in the PS4PKGBUILD]'
 	'--nosign[Do not create a signature for the package]'
 	'--packagelist[Only list packages that would be produced, without PKGEXT]'
 	'--printsrcinfo[Print the generated SRCINFO and exit]'

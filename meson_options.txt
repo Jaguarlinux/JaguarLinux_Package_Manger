@@ -20,7 +20,7 @@ option('scriptlet-shell', type : 'string', value : '/bin/sh',
 option('ldconfig', type : 'string', value : '/sbin/ldconfig',
        description : 'set the full path to ldconfig')
 
-option('buildscript', type : 'string', value : 'PKGBUILD',
+option('buildscript', type : 'string', value : 'PS4PKGBUILD',
        description : 'set the build script name used by ps4mkpkg')
 
 option('datarootdir', type : 'string', value : 'share',
