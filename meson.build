@@ -442,9 +442,9 @@ configure_file(
   install_dir : SYSCONFDIR)
 
 install_data(
-  'proto/PS4BUILD-split.proto',
-  'proto/PS4BUILD-vcs.proto',
-  'proto/PS4BUILD.proto',
+  'proto/PS4PKGBUILD-split.proto',
+  'proto/PS4PKGBUILD-vcs.proto',
+  'proto/PS4PKGBUILD.proto',
   'proto/proto.install',
   install_dir : join_paths(DATAROOTDIR, 'ps4'))
 
