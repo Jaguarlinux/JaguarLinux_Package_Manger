@@ -1,4 +1,4 @@
-pacman_tests = [
+ps4_tests = [
   'tests/backup001.py',
   'tests/cache-server-basic.py',
   'tests/clean001.py',
@@ -92,11 +92,11 @@ pacman_tests = [
   'tests/overwrite-files-match-negated.py',
   'tests/overwrite-files-match.py',
   'tests/overwrite-files-nonmatch.py',
-  'tests/pacman001.py',
-  'tests/pacman002.py',
-  'tests/pacman003.py',
-  'tests/pacman004.py',
-  'tests/pacman005.py',
+  'tests/ps4001.py',
+  'tests/ps4002.py',
+  'tests/ps4003.py',
+  'tests/ps4004.py',
+  'tests/ps4005.py',
   'tests/pkg-meta-invalid-name-file.py',
   'tests/pkg-meta-invalid-name-local.py',
   'tests/pkg-meta-invalid-name-sync.py',
@@ -354,7 +354,7 @@ xfail_tests = {
   'tests/upgrade078.py': true,
 }
 
-foreach input : pacman_tests
+foreach input : ps4_tests
   test_name = input.split('/')[1]
   args = [
     join_paths(meson.current_source_dir(), 'pactest.py'),
@@ -379,5 +379,5 @@ foreach input : pacman_tests
     args : args,
     timeout : 120,
     should_fail : xfail_tests.get(input, false),
-    depends : [pacman_bin])
+    depends : [ps4_bin])
 endforeach
