@@ -6,7 +6,7 @@ wrapped_scripts = [
 ]
 
 scripts = [
-  'ps4makpkg-template.pl.in',
+  'ps4mkpkg-template.pl.in',
 ]
 
 SCRIPT_EDITOR = find_program(configure_file(
