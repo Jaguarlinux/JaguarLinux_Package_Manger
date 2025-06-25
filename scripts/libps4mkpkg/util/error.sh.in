@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   error.sh.in - error variable definitions for makepkg
+#   error.sh.in - error variable definitions for ps4mkpkg
 #
 #   Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #   Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
@@ -37,6 +37,6 @@ E_FS_PERMISSIONS=11
 E_PS4PKGBUILD_ERROR=12
 E_ALREADY_BUILT=13
 E_INSTALL_FAILED=14
-E_MISSING_MAKEPKG_DEPS=15
+E_MISSING_PS4MKPKG_DEPS=15
 E_PRETTY_BAD_PRIVACY=16
 E_NOT_A_CLONE_OF=17
