@@ -1,15 +1,14 @@
-#!@BASH@
 
+#!@BASH@
 input=$1
 output=$2
 mode=$3
-
 sed \
   -e "s|@rootdir[@]|@ROOTDIR@|g" \
   -e "s|@localedir[@]|@LOCALEDIR@|g" \
   -e "s|@sysconfdir[@]|@sysconfdir@|g" \
   -e "s|@localstatedir[@]|@localstatedir@|g" \
-  -e "s|@libps4mkpkgdir[@]|@LIBPS4MKPKGDIR@|g" \
+  -e "s|@libmakepkgdir[@]|@LIBMAKEPKGDIR@|g" \
   -e "s|@pkgdatadir[@]|@PKGDATADIR@|g" \
   -e "s|@keyringdir[@]|@KEYRINGDIR@|g" \
   -e "s|@prefix[@]|@PREFIX@|g" \
@@ -23,7 +22,6 @@ sed \
   -e "s|@FILECMD[@]|@FILECMD@|g" \
   -e "s|@BSDTAR_NO_READ_SPARSE[@]|@BSDTAR_NO_READ_SPARSE@|g" \
   "$input" >"$output"
-
 if [[ $mode ]]; then
   chmod "$mode" "$output"
 fi
