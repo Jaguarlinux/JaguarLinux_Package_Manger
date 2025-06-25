@@ -76,7 +76,7 @@ custom_target(
   install : true,
   install_dir : BASHCOMPDIR)
 
-foreach symlink : ['ps4-key', 'makepkg']
+foreach symlink : ['ps4-key', 'ps4mkpkg']
   meson.add_install_script(MESON_MAKE_SYMLINK,
                            'ps4',
                            join_paths(BASHCOMPDIR, symlink))

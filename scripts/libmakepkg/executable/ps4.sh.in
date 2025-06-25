@@ -18,19 +18,19 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBMAKEPKG_EXECUTABLE_PACMAN_SH" ]] && return
-LIBMAKEPKG_EXECUTABLE_PACMAN_SH=1
+[[ -n "$LIBMAKEPKG_EXECUTABLE_PS4_SH" ]] && return
+LIBMAKEPKG_EXECUTABLE_PS4_SH=1
 
 MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
 
 source "$MAKEPKG_LIBRARY/util/message.sh"
 
-executable_functions+=('executable_pacman')
+executable_functions+=('executable_ps4')
 
-executable_pacman() {
+executable_ps4() {
     if (( ! NODEPS || DEP_BIN || RMDEPS || INSTALL )); then
-		if [[ -z $PACMAN_PATH ]]; then
-			error "$(gettext "Cannot find the %s binary required for dependency operations.")" "$PACMAN"
+		if [[ -z $PS4_PATH ]]; then
+			error "$(gettext "Cannot find the %s binary required for dependency operations.")" "$PS4"
 			return 1
 		fi
 	fi

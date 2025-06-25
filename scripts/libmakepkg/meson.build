@@ -20,7 +20,7 @@ foreach module : libmakepkg_modules
     input : '@0@.sh.in'.format(module['name']),
     output : '@BASENAME@',
     install : true,
-    install_dir : join_paths(get_option('datadir'), 'makepkg'))
+    install_dir : join_paths(get_option('datadir'), 'ps4mkpkg'))
 
   if module.get('has_subdir', false)
     subdir(module['name'])

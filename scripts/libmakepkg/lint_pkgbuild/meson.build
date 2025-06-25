@@ -29,7 +29,7 @@ sources = [
 ]
 
 foreach src : sources
-  output_dir = join_paths(get_option('datadir'), 'makepkg', libmakepkg_module)
+  output_dir = join_paths(get_option('datadir'), 'ps4mkpkg', libmakepkg_module)
 
   custom_target(
     libmakepkg_module + '_' + src.underscorify(),

@@ -8,14 +8,14 @@ sources = [
   'debugedit.sh.in',
   'gpg.sh.in',
   'gzip.sh.in',
-  'pacman.sh.in',
+  'ps4.sh.in',
   'strip.sh.in',
   'sudo.sh.in',
   'vcs.sh.in',
 ]
 
 foreach src : sources
-  output_dir = join_paths(get_option('datadir'), 'makepkg', libmakepkg_module)
+  output_dir = join_paths(get_option('datadir'), 'ps4mkpkg', libmakepkg_module)
 
   custom_target(
     libmakepkg_module + '_' + src.underscorify(),
