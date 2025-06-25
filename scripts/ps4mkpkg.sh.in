@@ -825,7 +825,7 @@ check_build_status() {
 
 backup_package_variables() {
 	local var
-	for var in ${ps4pkgbuild_schema_package_overrides[@]}; do
+	for var in ${pkgbuild_schema_package_overrides[@]}; do
 		local indirect="${var}_backup"
 		eval "${indirect}=(\"\${$var[@]}\")"
 	done
@@ -833,7 +833,7 @@ backup_package_variables() {
 
 restore_package_variables() {
 	local var
-	for var in ${ps4pkgbuild_schema_package_overrides[@]}; do
+	for var in ${pkgbuild_schema_package_overrides[@]}; do
 		local indirect="${var}_backup"
 		if [[ -n ${!indirect} ]]; then
 			eval "${var}=(\"\${$indirect[@]}\")"
@@ -1117,7 +1117,7 @@ else
 	fi
 fi
 
-unset pkgname "${ps4pkgbuild_schema_strings[@]}" "${ps4pkgbuild_schema_arrays[@]}"
+unset pkgname "${pkgbuild_schema_strings[@]}" "${pkgbuild_schema_arrays[@]}"
 unset "${known_hash_algos[@]/%/sums}"
 unset -f pkgver verify prepare build check package "${!package_@}"
 unset "${!makedepends_@}" "${!depends_@}" "${!source_@}" "${!checkdepends_@}"
