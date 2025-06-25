@@ -24,7 +24,7 @@ ROOTDIR = get_option('root-dir')
 BINDIR = join_paths(PREFIX, get_option('bindir'))
 MANDIR = join_paths(PREFIX, get_option('mandir'))
 BUILDSCRIPT = get_option('buildscript')
-LIBPS4MKPKGDIR = join_paths(PREFIX, DATAROOTDIR, 'ps4mkpkg')
+LIBMAKEPKGDIR = join_paths(PREFIX, DATAROOTDIR, 'ps4mkpkg')
 PKGDATADIR = join_paths(PREFIX, DATAROOTDIR, meson.project_name())
 KEYRINGDIR = join_paths(PREFIX, DATAROOTDIR, get_option('keyringdir'))
 
@@ -295,7 +295,7 @@ substs.set('TEMPLATE_DIR', get_option('ps4mkpkg-template-dir'))
 substs.set('DEBUGSUFFIX', get_option('debug-suffix'))
 substs.set('INODECMD', inodecmd)
 substs.set('FILECMD', filecmd)
-substs.set('LIBPS4MKPKGDIR', LIBPS4MKPKGDIR)
+substs.set('LIBMAKEPKGDIR', LIBMAKEPKGDIR)
 substs.set('STRIP_BINARIES', strip_binaries)
 substs.set('STRIP_SHARED', strip_shared)
 substs.set('STRIP_STATIC', strip_static)
@@ -442,9 +442,9 @@ configure_file(
   install_dir : SYSCONFDIR)
 
 install_data(
-  'proto/PS4PKGBUILD-split.proto',
-  'proto/PS4PKGBUILD-vcs.proto',
-  'proto/PS4PKGBUILD.proto',
+  'proto/PKGBUILD-split.proto',
+  'proto/PKGBUILD-vcs.proto',
+  'proto/PKGBUILD.proto',
   'proto/proto.install',
   install_dir : join_paths(DATAROOTDIR, 'ps4'))
 
@@ -459,7 +459,7 @@ endforeach
 
 TEST_ENV = environment()
 TEST_ENV.set('PMTEST_SCRIPTLIB_DIR', join_paths(meson.project_source_root(), 'scripts/library/'))
-TEST_ENV.set('PMTEST_LIBPS4MKPKG_DIR', join_paths(meson.project_build_root(), 'scripts/libps4mkpkg/'))
+TEST_ENV.set('PMTEST_LIBMAKEPKGDIR', join_paths(meson.project_build_root(), 'scripts/libps4mkpkg/'))
 TEST_ENV.set('PMTEST_UTIL_DIR', meson.project_build_root() + '/')
 TEST_ENV.set('PMTEST_SCRIPT_DIR', join_paths(meson.project_build_root(), 'scripts/'))
 
