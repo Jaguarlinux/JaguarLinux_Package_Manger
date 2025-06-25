@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   config.sh - functions for handling makepkg config files
+#   config.sh - functions for handling ps4mkpkg config files
 #
 #   Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #   Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
@@ -28,46 +28,46 @@ source "$PS4MKPKG_LIBRARY/util/error.sh"
 source "$PS4MKPKG_LIBRARY/util/message.sh"
 source "$PS4MKPKG_LIBRARY/util/util.sh"
 
-# correctly source makepkg.conf, respecting user precedence and the system conf
-source_makepkg_config() {
+# correctly source ps4mkpkg.conf, respecting user precedence and the system conf
+source_ps4mkpkg_config() {
 	# $1: override system config file
 
-	local MAKEPKG_CONF=${1:-${MAKEPKG_CONF:-@sysconfdir@/makepkg.conf}}
+	local PS4MKPKG_CONF=${1:-${PS4MKPKG_CONF:-@sysconfdir@/ps4mkpkg.conf}}
 
 	# Source the config file; fail if it is not found
-	if [[ -r $MAKEPKG_CONF ]]; then
-		source_safe "$MAKEPKG_CONF"
-		if [[ -d "$MAKEPKG_CONF.d" ]] && compgen -G "$MAKEPKG_CONF.d"/'*.conf' > /dev/null; then
-			for c in "$MAKEPKG_CONF.d"/*.conf; do
+	if [[ -r $PS4MKPKG_CONF ]]; then
+		source_safe "$PS4MKPKG_CONF"
+		if [[ -d "$PS4MKPKG_CONF.d" ]] && compgen -G "$PS4MKPKG_CONF.d"/'*.conf' > /dev/null; then
+			for c in "$PS4MKPKG_CONF.d"/*.conf; do
 				source_safe $c
 			done
 		fi
 	else
-		error "$(gettext "%s not found.")" "$MAKEPKG_CONF"
+		error "$(gettext "%s not found.")" "$PS4MKPKG_CONF"
 		plainerr "$(gettext "Aborting...")"
 		exit $E_CONFIG_ERROR
 	fi
 
-	# Source user-specific makepkg.conf overrides, but only if no override config
+	# Source user-specific ps4mkpkg.conf overrides, but only if no override config
 	# file was specified
-	XDG_PACMAN_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/pacman"
-	if [[ $MAKEPKG_CONF = "@sysconfdir@/makepkg.conf" ]]; then
-		if [[ -r $XDG_PACMAN_DIR/makepkg.conf ]]; then
-			source_safe "$XDG_PACMAN_DIR/makepkg.conf"
-		elif [[ -r $HOME/.makepkg.conf ]]; then
-			source_safe "$HOME/.makepkg.conf"
+	XDG_PS4_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/ps4"
+	if [[ $PS4MKPKG_CONF = "@sysconfdir@/ps4mkpkg.conf" ]]; then
+		if [[ -r $XDG_PS4_DIR/ps4mkpkg.conf ]]; then
+			source_safe "$XDG_PS4_DIR/ps4mkpkg.conf"
+		elif [[ -r $HOME/.ps4mkpkg.conf ]]; then
+			source_safe "$HOME/.ps4mkpkg.conf"
 		fi
 	fi
 }
 
-# load makepkg.conf by sourcing the configuration files, and preserving
+# load ps4mkpkg.conf by sourcing the configuration files, and preserving
 # existing environment settings
-load_makepkg_config() {
+load_ps4mkpkg_config() {
 	# $1: override system config file
 
-	local MAKEPKG_CONF=${1:-${MAKEPKG_CONF:-@sysconfdir@/makepkg.conf}}
+	local PS4MKPKG_CONF=${1:-${PS4MKPKG_CONF:-@sysconfdir@/ps4mkpkg.conf}}
 
-	# preserve environment variables to override makepkg.conf
+	# preserve environment variables to override ps4mkpkg.conf
 	local restore_envvars=$(
 		for var in PKGDEST SRCDEST SRCPKGDEST LOGDEST BUILDDIR PKGEXT SRCEXT GPGKEY PACKAGER CARCH; do
 			# the output of 'declare -p' results in locally scoped values when used within a function
@@ -75,7 +75,7 @@ load_makepkg_config() {
 		done
 	)
 
-	source_makepkg_config "$MAKEPKG_CONF"
+	source_ps4mkpkg_config "$PS4MKPKG_CONF"
 
 	# prevent altering these directly
 	readonly -a BUILDENV OPTIONS

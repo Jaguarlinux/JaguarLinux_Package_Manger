@@ -48,8 +48,8 @@ lint_xdata() {
 			error "$(gettext "%s array: The key part of an entry must not be empty.")" "xdata"
 			ret=1
 		elif [[ "${key}" == "pkgtype" ]]; then
-			# The key "pkgtype" is reserved for makepkg.
-			error "$(gettext "%s array: The key 'pkgtype' is reserved for makepkg.")" "xdata"
+			# The key "pkgtype" is reserved for ps4mkpkg.
+			error "$(gettext "%s array: The key 'pkgtype' is reserved for ps4mkpkg.")" "xdata"
 			ret=1
 		fi
 	done

@@ -61,7 +61,7 @@ library_depends() {
 				fi
 
 				# only add library dependency if it exists - this helps bootstrapping dependencies
-				if [[ $(run_pacman -T "$prefix:$sofile") ]]; then
+				if [[ $(run_ps4 -T "$prefix:$sofile") ]]; then
 					continue
 				fi
 

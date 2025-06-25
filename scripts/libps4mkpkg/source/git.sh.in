@@ -29,7 +29,7 @@ source "$PS4MKPKG_LIBRARY/util/message.sh"
 source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
 
 export GIT_CONFIG_GLOBAL=/dev/null
-export GIT_CONFIG_SYSTEM=${MAKEPKG_GIT_CONFIG:-'@sysconfdir@/makepkg.d/gitconfig'}
+export GIT_CONFIG_SYSTEM=${PS4MKPKG_GIT_CONFIG:-'@sysconfdir@/ps4mkpkg.d/gitconfig'}
 
 download_git() {
 	# abort early if parent says not to fetch
@@ -78,9 +78,9 @@ download_git() {
 	# Sanitize the cloned repo
 	# $GIT_DIR/info/attributes overrides .gitattributes, and thus no files in the repository
 	# can be altered by git features like export-subst or export-ignore
-	local MAKEPKG_GIT_DIR="$(git -c safe.bareRepository=all -C "$dir" rev-parse --absolute-git-dir)"
-	mkdir -p "$MAKEPKG_GIT_DIR/info"
-	echo "* -export-subst -export-ignore" > "$MAKEPKG_GIT_DIR/info/attributes"
+	local PS4MKPKG_GIT_DIR="$(git -c safe.bareRepository=all -C "$dir" rev-parse --absolute-git-dir)"
+	mkdir -p "$PS4MKPKG_GIT_DIR/info"
+	echo "* -export-subst -export-ignore" > "$PS4MKPKG_GIT_DIR/info/attributes"
 }
 
 extract_git() {
@@ -139,7 +139,7 @@ extract_git() {
 	fi
 
 	if [[ $ref != "origin/HEAD" ]] || (( updating )) ; then
-		if ! git checkout --force --no-track -B makepkg "$ref" --; then
+		if ! git checkout --force --no-track -B ps4mkpkg "$ref" --; then
 			error "$(gettext "Failure while creating working copy of %s %s repo")" "${repo}" "git"
 			plainerr "$(gettext "Aborting...")"
 			exit 1
