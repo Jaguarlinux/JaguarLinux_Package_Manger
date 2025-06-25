@@ -2,21 +2,21 @@
 
 source "$(dirname "$0")"/../tap.sh || exit 1
 
-script=${1:-${PMTEST_SCRIPT_DIR}makepkg-template}
+script=${1:-${PMTEST_SCRIPT_DIR}ps4mkpkg-template}
 
 if ! type -p "$script" &>/dev/null; then
-	tap_bail "makepkg-template executable (%s) could not be located" "${script}"
+	tap_bail "ps4mkpkg-template executable (%s) could not be located" "${script}"
 	exit 1
 fi
 
 TMPDIR="$(mktemp -d "/tmp/${0##*/}.XXXXXX")"
 trap "rm -rf '${TMPDIR}'" EXIT TERM
-cp -r "${0%/*}/makepkg-template-tests" "$TMPDIR/makepkg-template-tests"
+cp -r "${0%/*}/ps4mkpkg-template-tests" "$TMPDIR/ps4mkpkg-template-tests"
 
 # normalize paths
 script="$(readlink -f $(type -p "$script"))"
 cd "$TMPDIR"
-testdir="./makepkg-template-tests"
+testdir="./ps4mkpkg-template-tests"
 
 
 total=$(find "$testdir" -maxdepth 1 -mindepth 1 -type d | wc -l)

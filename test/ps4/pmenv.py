@@ -1,5 +1,5 @@
 #  Copyright (c) 2006 by Aurelien Foret <orelien@chez.com>
-#  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#  Copyright (c) 2006-2025 ps4 Development Team <ps4-dev@lists.archlinux.org>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ class pmenv(object):
 
     def __init__(self, root = "root"):
         self.root = os.path.abspath(root)
-        self.pacman = {
+        self.ps4 = {
             "bin": None,
             "bindir": ["/usr/bin/"],
             "debug": 0,
@@ -44,8 +44,8 @@ class pmenv(object):
 
     def __str__(self):
         return "root = %s\n" \
-               "pacman = %s" \
-               % (self.root, self.pacman)
+               "ps4 = %s" \
+               % (self.root, self.ps4)
 
     def addtest(self, testcase):
         """
@@ -66,8 +66,8 @@ class pmenv(object):
                 tap.plan(1)
                 tap.diag("Running '%s'" % t.testname)
 
-                t.generate(self.pacman)
-                t.run(self.pacman)
+                t.generate(self.ps4)
+                t.run(self.ps4)
 
                 tap.diag("==> Checking rules")
                 # When running under meson, we don't emit 'todo' in the plan and instead

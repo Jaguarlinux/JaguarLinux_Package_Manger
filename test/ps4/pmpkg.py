@@ -98,12 +98,12 @@ class pmpkg(object):
             filename, extra = filename.split("|")
         return filename
 
-    def makepkg_bytes(self):
+    def ps4mkpkg_bytes(self):
         buf = BytesIO();
-        self.makepkg(fileobj=buf)
+        self.ps4mkpkg(fileobj=buf)
         return buf.getvalue()
 
-    def makepkg(self, path=None, fileobj=None):
+    def ps4mkpkg(self, path=None, fileobj=None):
         """Creates an Arch Linux package archive.
 
         A package archive is generated in the location 'path', based on the data

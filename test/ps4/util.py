@@ -1,5 +1,5 @@
 #  Copyright (c) 2006 by Aurelien Foret <orelien@chez.com>
-#  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#  Copyright (c) 2006-2025 ps4 Development Team <ps4-dev@lists.archlinux.org>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,15 +25,15 @@ SELFPATH    = os.path.abspath(os.path.dirname(__file__))
 
 # ALPM
 PM_ROOT     = "/"
-PM_DBPATH   = "var/lib/pacman"
-PM_SYNCDBPATH = "var/lib/pacman/sync"
-PM_LOCK     = "var/lib/pacman/db.lck"
-PM_CACHEDIR = "var/cache/pacman/pkg"
+PM_DBPATH   = "var/lib/ps4"
+PM_SYNCDBPATH = "var/lib/ps4/sync"
+PM_LOCK     = "var/lib/ps4/db.lck"
+PM_CACHEDIR = "var/cache/ps4/pkg"
 PM_EXT_PKG  = ".pkg.tar.gz"
-PM_HOOKDIR  = "etc/pacman.d/hooks"
+PM_HOOKDIR  = "etc/ps4.d/hooks"
 
-# Pacman
-PACCONF     = "etc/pacman.conf"
+# ps4
+PACCONF     = "etc/ps4.conf"
 
 # Pactest
 TMPDIR      = "tmp"

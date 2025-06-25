@@ -2,7 +2,7 @@ TODO
 ====
 
 Features:
-- implement script support (makekpg, repo-add, etc)
+- implement script support (ps4mkkkpg, repo-add, etc)
 
 Tests:
-- add test cases for pacman -D and pacman -T
+- add test cases for ps4 -D and ps4 -T

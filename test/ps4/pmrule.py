@@ -1,5 +1,5 @@
 #  Copyright (c) 2006 by Aurelien Foret <orelien@chez.com>
-#  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#  Copyright (c) 2006-2025 ps4 Development Team <pacman-dev@lists.archlinux.org>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ class pmrule(object):
         else:
             [key, value] = [args, None]
 
-        if kind == "PACMAN":
+        if kind == "PS4":
             if case == "RETCODE":
                 if test.retcode != int(key):
                     success = 0
@@ -65,7 +65,7 @@ class pmrule(object):
                 elif not util.grep(logfile, key):
                     success = 0
             else:
-                tap.diag("PACMAN rule '%s' not found" % case)
+                tap.diag("PS4 rule '%s' not found" % case)
                 success = -1
         elif kind == "PKG":
             localdb = test.db["local"]

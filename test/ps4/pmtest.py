@@ -1,5 +1,5 @@
 #  Copyright (c) 2006 by Aurelien Foret <orelien@chez.com>
-#  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#  Copyright (c) 2006-2025 ps4 Development Team <ps4-dev@lists.archlinux.org>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ class pmtest(object):
         self.dbver = 9
         self.cachepkgs = True
         self.config = config
-        self.cmd = ["pacman", "--noconfirm",
+        self.cmd = ["ps4", "--noconfirm",
                 "--config", self.configfile(),
                 "--root", self.rootdir(),
                 "--dbpath", self.dbdir(),
@@ -117,7 +117,7 @@ class pmtest(object):
         else:
             raise IOError("file %s does not exist!" % self.name)
 
-    def generate(self, pacman):
+    def generate(self, ps4):
         tap.diag("==> Generating test environment")
 
         # Cleanup leftover files from a previous test session
@@ -134,9 +134,9 @@ class pmtest(object):
         logdir = os.path.join(self.root, os.path.dirname(util.LOGFILE))
         etcdir = os.path.join(self.root, os.path.dirname(util.PACCONF))
         bindir = os.path.join(self.root, "bin")
-        ldconfig = os.path.basename(pacman["ldconfig"])
-        ldconfigdir = os.path.join(self.root, os.path.dirname(pacman["ldconfig"][1:]))
-        shell = pacman["scriptlet-shell"][1:]
+        ldconfig = os.path.basename(ps4["ldconfig"])
+        ldconfigdir = os.path.join(self.root, os.path.dirname(ps4["ldconfig"][1:]))
+        shell = ps4["scriptlet-shell"][1:]
         shelldir = os.path.join(self.root, os.path.dirname(shell))
         sys_dirs = [dbdir, cachedir, syncdir, tmpdir, logdir, etcdir, bindir,
                     ldconfigdir, shelldir]
@@ -162,7 +162,7 @@ class pmtest(object):
         for pkg in self.localpkgs:
             vprint("\t%s" % os.path.join(util.TMPDIR, pkg.filename()))
             pkg.finalize()
-            pkg.makepkg(tmpdir)
+            pkg.ps4mkpkg(tmpdir)
         for key, value in self.db.items():
             for pkg in value.pkgs:
                 pkg.finalize()
@@ -171,9 +171,9 @@ class pmtest(object):
             for pkg in value.pkgs:
                 vprint("\t%s" % os.path.join(util.PM_CACHEDIR, pkg.filename()))
                 if self.cachepkgs:
-                    pkg.makepkg(cachedir)
+                    pkg.ps4mkpkg(cachedir)
                 elif value.syncdir:
-                    pkg.makepkg(os.path.join(syncdir, value.treename))
+                    pkg.ps4mkpkg(os.path.join(syncdir, value.treename))
                 if pkg.path:
                     pkg.md5sum = util.getmd5sum(pkg.path)
                     pkg.csize = os.stat(pkg.path)[stat.ST_SIZE]
@@ -216,7 +216,7 @@ class pmtest(object):
     def add_hook(self, name, content):
         if not name.endswith(".hook"):
             name = name + ".hook"
-        path = os.path.join("etc/pacman.d/hooks/", name)
+        path = os.path.join("etc/ps4.d/hooks/", name)
         self.filesystem.append(pmfile.pmfile(path, content))
 
     def add_script(self, name, content):
@@ -231,13 +231,13 @@ class pmtest(object):
             files.update(r.snapshots_needed())
         return files
 
-    def run(self, pacman):
+    def run(self, ps4):
         if os.path.isfile(util.PM_LOCK):
-            tap.bail("\tERROR: another pacman session is on-going -- skipping")
+            tap.bail("\tERROR: another ps4 session is on-going -- skipping")
             return
 
         tap.diag("==> Running test")
-        vprint("\tpacman %s" % self.args)
+        vprint("\tps4 %s" % self.args)
 
         cmd = []
         if os.geteuid() != 0:
@@ -255,9 +255,9 @@ class pmtest(object):
             else:
                 cmd.append("fakeroot")
 
-        if pacman["gdb"]:
+        if ps4["gdb"]:
             cmd.extend(["libtool", "execute", "gdb", "--args"])
-        if pacman["valgrind"]:
+        if ps4["valgrind"]:
             suppfile = os.path.join(os.path.dirname(__file__),
                     '..', '..', 'valgrind.supp')
             cmd.extend(["libtool", "execute", "valgrind", "-q",
@@ -270,9 +270,9 @@ class pmtest(object):
             self.addrule("FILE_EMPTY=var/log/valgrind")
 
         # replace program name with absolute path
-        prog = pacman["bin"]
+        prog = ps4["bin"]
         if not prog:
-            prog = util.which(self.cmd[0], pacman["bindir"])
+            prog = util.which(self.cmd[0], ps4["bindir"])
         if not prog or not os.access(prog, os.X_OK):
             if not prog:
                 tap.bail("could not locate '%s' binary" % (self.cmd[0]))
@@ -280,13 +280,13 @@ class pmtest(object):
 
         cmd.append(os.path.abspath(prog))
         cmd.extend(self.cmd[1:])
-        if pacman["manual-confirm"]:
+        if ps4["manual-confirm"]:
             cmd.append("--confirm")
-        if pacman["debug"]:
-            cmd.append("--debug=%s" % pacman["debug"])
+        if ps4["debug"]:
+            cmd.append("--debug=%s" % ps4["debug"])
         cmd.extend(shlex.split(self.args))
 
-        if not (pacman["gdb"] or pacman["nolog"]):
+        if not (ps4["gdb"] or ps4["nolog"]):
             output = open(os.path.join(self.root, util.LOGFILE), 'w')
         else:
             output = None
@@ -294,7 +294,7 @@ class pmtest(object):
 
         self.start_http_servers()
 
-        # Change to the tmp dir before running pacman, so that local package
+        # Change to the tmp dir before running ps4, so that local package
         # archives are made available more easily.
         time_start = time.time()
         self.retcode = subprocess.call(cmd, stdout=output, stderr=output,
@@ -315,7 +315,7 @@ class pmtest(object):
             os.unlink(util.PM_LOCK)
         # Look for a core file
         if os.path.isfile(os.path.join(self.root, util.TMPDIR, "core")):
-            tap.diag("\tERROR: pacman dumped a core file")
+            tap.diag("\tERROR: ps4 dumped a core file")
 
     def check(self):
         tap.plan(len(self.rules))

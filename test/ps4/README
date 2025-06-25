@@ -1,15 +1,15 @@
 README
 ======
 
-pactest is a test suite for the Arch Linux package manager: pacman.
+pactest is a test suite for the Arch Linux package manager: ps4.
 
-It has a rather high level view of operations performed by pacman: it
+It has a rather high level view of operations performed by ps4: it
 automatically creates a test environment based on a test case file
-description, the run pacman, and finally check the results of test according
+description, the run ps4, and finally check the results of test according
 to a set of rules defined in the test case.
 
 It is written in Python and makes available most of what can be found in
-pacman's code to create Arch Linux packages or read and write databases entries.
+ps4's code to create Arch Linux packages or read and write databases entries.
 
 Each test case is defined in a separate file that is sourced in order to set
 the environment.
@@ -17,14 +17,14 @@ the environment.
 pactest creates the environment in the subdirectory "root" created in the
 current directory.
 The following directory structure is used:
-  - var/lib/pacman: databases path (local and sync ones)
-  - etc/pacman.conf for pacman configuration file
+  - var/lib/ps4: databases path (local and sync ones)
+  - etc/ps4.conf for ps4 configuration file
   - var/cache/pkg: sync packages cache
   - var/log/pactest.log: log file
   - var/pub: location for pseudo sync repositories
-  - tmp: hold all local package archives (to be used with pacman -U)
+  - tmp: hold all local package archives (to be used with ps4 -U)
 
-Note: the logfile is used to capture all pacman outputs.
+Note: the logfile is used to capture all ps4 outputs.
 
 Test case example:
 	self.description = "Install a package"
@@ -36,15 +36,15 @@ Test case example:
 
 	self.args = "-U dummy-1.0-1.pkg.tar.gz"
 
-	self.addrule("PACMAN_RETCODE=0")
+	self.addrule("ps4_RETCODE=0")
 	self.addrule("PKG_EXIST=dummy")
 	for f in p.files:
 		self.addrule("FILE_EXIST=%s" % f)
 
 Basically, the above test case will try to install a package (dummy-1.0-3),
-including two files, from a local archive, by calling "pacman -U"
+including two files, from a local archive, by calling "ps4 -U"
 Upon completion, it checks that:
-  - pacman returned no error code,
+  - ps4 returned no error code,
   - a "dummy" entry exists in the "local" database
   - all files from the package exist in the filesystem.
 
@@ -90,7 +90,7 @@ standard output during test execution.
 	args
 	----
 
-A string of arguments that are passed to the pacman binary when the test is
+A string of arguments that are passed to the ps4 binary when the test is
 run.
 
 Example:
@@ -99,7 +99,7 @@ Example:
 	option
 	------
 
-A dictionary that holds the data used in the pacman configuration file.
+A dictionary that holds the data used in the ps4 configuration file.
 The following options are known to be useful in pactest tests; this list
 is not necessarily complete:
   - HoldPkg
@@ -109,11 +109,11 @@ is not necessarily complete:
   - NoUpgrade
   - XferCommand
 
-For documentation on these options, see the pacman.conf documentation.
+For documentation on these options, see the ps4.conf documentation.
 
 Examples:
 	self.option["NoUpgrade"] = ["etc/X11/xorg.conf",
-	                            "etc/pacman.conf"]
+	                            "etc/ps4.conf"]
 	self.option["NoExtract"] = ["etc/lilo.conf"]
 
 	filesystem
@@ -136,7 +136,7 @@ Packages
 ========
 
 The test case file description shall define a number of packages that can be
-used to either populate a database, or to feed pacman with data needed during
+used to either populate a database, or to feed ps4 with data needed during
 its execution.
 
 This can be achieved by creating pmpkg objects, with the following constructor:
@@ -187,7 +187,7 @@ a new database name is given.
 package is an existing pmpkg object.
 It creates a package archive based on the given object.  The resulting archive
 is located in the temporary directory of the test environment, ready to be
-supplied to pacman for test purposes.
+supplied to ps4 for test purposes.
 
 
 Files
@@ -249,7 +249,7 @@ Finally, to check test success or failure, one shall define a set of rules.
 A rule is a string composed by a key and an item, joined with a "=" symbol.
 
 Examples:
-	self.addrule("PACMAN_RETCODE=0")
+	self.addrule("ps4_RETCODE=0")
 	self.addrule("PKG_EXIST=dummy")
 	self.addrule("FILE_MODIFIED=bin/dummy")
 	self.addrule("PKG_DEPENDS=xorg|fontconfig")
@@ -265,17 +265,17 @@ Example:
 
 Finally, the following rules are supported:
 
-	. PACMAN rules
+	. ps4 rules
 
 Possible rules are:
 
-  PACMAN_RETCODE=value
-  PACMAN_OUTPUT=value
+  ps4_RETCODE=value
+  ps4_OUTPUT=value
 
-For RETCODE, pactest will ensure the pacman return code is the value given.
-For OUTPUT, pactest will grep pacman outputs for the given value.
+For RETCODE, pactest will ensure the ps4 return code is the value given.
+For OUTPUT, pactest will grep ps4 outputs for the given value.
 
-Note: PACMAN_OUTPUT should not be used. Pacman outputs are likely to change
+Note: ps4_OUTPUT should not be used. ps4 outputs are likely to change
 from one release to another, so that it's reliability is quite low.
 
 	. PKG rules

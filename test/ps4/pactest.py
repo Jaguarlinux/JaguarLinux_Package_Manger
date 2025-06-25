@@ -1,9 +1,9 @@
 #! /usr/bin/python3
 #
-#  pactest : run automated testing on the pacman binary
+#  pactest : run automated testing on the ps4 binary
 #
 #  Copyright (c) 2006 by Aurelien Foret <orelien@chez.com>
-#  Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#  Copyright (c) 2006-2025 ps4 Development Team <ps4-dev@lists.archlinux.org>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ class OutputSaver():
 
 def create_parser():
     usage = "usage: %prog [options] <path/to/testfile.py>..."
-    description = "Runs automated tests on the pacman binary. Tests are " \
+    description = "Runs automated tests on the ps4 binary. Tests are " \
             "described using an easy python syntax, and several can be " \
             "ran at once."
     parser = OptionParser(usage = usage, description = description)
@@ -70,10 +70,10 @@ def create_parser():
                       help = "print verbose output")
     parser.add_option("-d", "--debug", type = "int",
                       dest = "debug", default = 0,
-                      help = "set debug level for pacman")
-    parser.add_option("-p", "--pacman", type = "string",
+                      help = "set debug level for ps4")
+    parser.add_option("-p", "--ps4", type = "string",
                       dest = "bin", default = None,
-                      help = "specify location of the pacman binary")
+                      help = "specify location of the ps4 binary")
     parser.add_option("--bindir", type = "string",
                       dest = "bindir", action = "append",
                       help = "specify location of binaries")
@@ -88,19 +88,19 @@ def create_parser():
                       help = "skip translation-related tests")
     parser.add_option("--keep-root", action = "store_true",
                       dest = "keeproot", default = False,
-                      help = "don't remove the generated pacman root filesystem")
+                      help = "don't remove the generated ps4 root filesystem")
     parser.add_option("--nolog", action = "store_true",
                       dest = "nolog", default = False,
-                      help = "do not log pacman messages")
+                      help = "do not log ps4 messages")
     parser.add_option("--gdb", action = "store_true",
                       dest = "gdb", default = False,
-                      help = "use gdb while calling pacman")
+                      help = "use gdb while calling ps4")
     parser.add_option("--valgrind", action = "store_true",
                       dest = "valgrind", default = os.getenv('PACTEST_VALGRIND'),
-                      help = "use valgrind while calling pacman")
+                      help = "use valgrind while calling ps4")
     parser.add_option("--manual-confirm", action = "store_true",
                       dest = "manualconfirm", default = False,
-                      help = "do not use --noconfirm for pacman calls")
+                      help = "do not use --noconfirm for ps4 calls")
     parser.add_option("--scriptlet-shell", type = "string",
                       dest = "scriptletshell", default = "/bin/sh",
                       help = "specify path to shell used for install scriptlets")
@@ -138,15 +138,15 @@ if __name__ == "__main__":
 
     # add parsed options to env object
     util.verbose = opts.verbose
-    env.pacman["debug"] = opts.debug
-    env.pacman["bin"] = opts.bin
-    env.pacman["bindir"] = opts.bindir
-    env.pacman["nolog"] = opts.nolog
-    env.pacman["gdb"] = opts.gdb
-    env.pacman["valgrind"] = opts.valgrind
-    env.pacman["manual-confirm"] = opts.manualconfirm
-    env.pacman["scriptlet-shell"] = opts.scriptletshell
-    env.pacman["ldconfig"] = opts.ldconfig
+    env.ps4["debug"] = opts.debug
+    env.ps4["bin"] = opts.bin
+    env.ps4["bindir"] = opts.bindir
+    env.ps4["nolog"] = opts.nolog
+    env.ps4["gdb"] = opts.gdb
+    env.ps4["valgrind"] = opts.valgrind
+    env.ps4["manual-confirm"] = opts.manualconfirm
+    env.ps4["scriptlet-shell"] = opts.scriptletshell
+    env.ps4["ldconfig"] = opts.ldconfig
     env.config["gpg"] = not opts.missing_gpg
     env.config["nls"] = not opts.missing_nls
     env.config["curl"] = not opts.missing_curl
@@ -172,4 +172,4 @@ if __name__ == "__main__":
     if not opts.keeproot:
         shutil.rmtree(root_path)
     else:
-        tap.diag("pacman testing root saved: %s" % root_path)
+        tap.diag("ps4 testing root saved: %s" % root_path)
