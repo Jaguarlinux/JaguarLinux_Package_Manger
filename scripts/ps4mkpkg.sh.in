@@ -2,8 +2,13 @@
 #
 #   ps4mkpkg - make packages compatible for use with ps4
 #
-#   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
-#   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
+#   Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#   Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
+#   Copyright (c) 2005 by Aurelien Foret <orelien@chez.com>
+#   Copyright (c) 2006 by Miklos Vajna <vmiklos@frugalware.org>
+#   Copyright (c) 2005 by Christian Hamar <krics@linuxforum.hu>
+#   Copyright (c) 2006 by Alex Smith <alex@alex-smith.me.uk>
+#   Copyright (c) 2006 by Andras Voroskoi <voroskoi@frugalware.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -83,7 +88,7 @@ shopt -s extglob
 
 ### SUBROUTINES ###
 
-# Import libps4mkpkg
+# Import libmakepkg
 for lib in "$PS4MKPKG_LIBRARY"/*.sh; do
 	source "$lib"
 done
@@ -530,7 +535,7 @@ write_buildinfo() {
 
 	local sum="$(sha256sum "${BUILDFILE}")"
 	sum=${sum%% *}
-	write_kv_pair "PS4PKGBUILD_sha256sum" $sum
+	write_kv_pair "ps4pkgbuild_sha256sum" $sum
 
 	write_kv_pair "packager" "${PACKAGER}"
 	write_kv_pair "builddate" "${SOURCE_DATE_EPOCH}"
@@ -820,7 +825,7 @@ check_build_status() {
 
 backup_package_variables() {
 	local var
-	for var in ${PS4PKGBUILD_schema_package_overrides[@]}; do
+	for var in ${ps4pkgbuild_schema_package_overrides[@]}; do
 		local indirect="${var}_backup"
 		eval "${indirect}=(\"\${$var[@]}\")"
 	done
@@ -828,7 +833,7 @@ backup_package_variables() {
 
 restore_package_variables() {
 	local var
-	for var in ${PS4PKGBUILD_schema_package_overrides[@]}; do
+	for var in ${ps4pkgbuild_schema_package_overrides[@]}; do
 		local indirect="${var}_backup"
 		if [[ -n ${!indirect} ]]; then
 			eval "${var}=(\"\${$indirect[@]}\")"
@@ -918,8 +923,9 @@ usage() {
 }
 
 version() {
-	printf "ps4mkpkg (ps4) %s\n" "$ps4mkpkg_version"
-	printf -- "Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site> \n"
+	printf "makepkg (pacman) %s\n" "$ps4mkpkg_version"
+	printf -- "Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>.\n"
+	printf -- "Copyright (C) 2025 TigerClips1 <spongebob1966@proton.me>.\n"
 	printf '\n'
 	printf -- "$(gettext "\
 This is free software; see the source for copying conditions.\n\
@@ -1111,7 +1117,7 @@ else
 	fi
 fi
 
-unset pkgname "${PS4PKGBUILD_schema_strings[@]}" "${PS4PKGBUILD_schema_arrays[@]}"
+unset pkgname "${ps4pkgbuild_schema_strings[@]}" "${ps4pkgbuild_schema_arrays[@]}"
 unset "${known_hash_algos[@]/%/sums}"
 unset -f pkgver verify prepare build check package "${!package_@}"
 unset "${!makedepends_@}" "${!depends_@}" "${!source_@}" "${!checkdepends_@}"
