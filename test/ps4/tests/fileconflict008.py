@@ -16,6 +16,6 @@ self.addpkg2db("sync", p1)
 
 self.args = "-Su"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=dummy")
 self.addrule("PKG_EXIST=replace")

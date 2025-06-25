@@ -26,7 +26,7 @@ self.addpkg2db("sync", sp2)
 
 self.args = "-S foo bar"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_VERSION=foo|1-2")
 self.addrule("PKG_VERSION=bar|1-2")
 self.addrule("FILE_EXIST=hook-output")

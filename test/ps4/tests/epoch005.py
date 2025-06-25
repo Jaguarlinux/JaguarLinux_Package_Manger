@@ -19,7 +19,7 @@ for k, v in pkgvers:
 
 self.args = "-Su"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 for k, v in pkgvers:
 	right_ver = versions[max(k, 2)]
 	self.addrule("PKG_VERSION=pkg_%d|%s" % (k, right_ver))

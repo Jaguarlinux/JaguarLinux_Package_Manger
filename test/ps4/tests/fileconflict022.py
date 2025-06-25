@@ -13,6 +13,6 @@ self.addpkg2db("sync", sp2)
 
 self.args = "-S %s %s" % (sp1.name, sp2.name)
 
-self.addrule("PACMAN_RETCODE=1")
+self.addrule("PS4_RETCODE=1")
 self.addrule("!PKG_EXIST=foo")
 self.addrule("!PKG_EXIST=bar")

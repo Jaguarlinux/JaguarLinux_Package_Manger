@@ -8,6 +8,6 @@ self.addpkg2db("local", lp)
 
 self.args = "-Su"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 # remember, this is how we have to handle this- 003 will not be installed
 self.addrule("PKG_VERSION=usbutils|1:002-1")

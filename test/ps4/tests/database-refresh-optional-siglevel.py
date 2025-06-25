@@ -8,4 +8,4 @@ self.db['sync'].option['SigLevel'] = ["Optional"]
 
 self.args = '-Syy'
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")

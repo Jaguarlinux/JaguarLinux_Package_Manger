@@ -13,7 +13,7 @@ for p in lp1, lp2, lp3:
 
 self.args = "-R grp"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=pkg1")
 self.addrule("PKG_EXIST=pkg2")
 self.addrule("!PKG_EXIST=pkg3")

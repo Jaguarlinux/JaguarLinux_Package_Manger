@@ -15,6 +15,6 @@ self.cachepkgs = False
 
 self.args = '-S pkg1'
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_EXIST=pkg1")
 self.addrule("CACHE_EXISTS=pkg1|1.0-1")

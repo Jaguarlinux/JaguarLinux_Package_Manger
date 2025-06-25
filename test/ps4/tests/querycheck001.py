@@ -11,5 +11,5 @@ self.addpkg2db("local",pkg)
 
 self.args = "-Qk"
 
-self.addrule("PACMAN_RETCODE=0")
-self.addrule("!PACMAN_OUTPUT=warning.*(No such file or directory)")
+self.addrule("PS4_RETCODE=0")
+self.addrule("!PS4_OUTPUT=warning.*(No such file or directory)")

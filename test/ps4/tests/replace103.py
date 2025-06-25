@@ -14,6 +14,6 @@ self.addpkg2db("local", sp2)
 
 self.args = "-Su"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_EXIST=util-linux-git")
 self.addrule("!PKG_EXIST=util-linux")

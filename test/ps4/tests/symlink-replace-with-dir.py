@@ -12,7 +12,7 @@ self.addpkg2db("sync", p1)
 
 self.args = "-S pkg2 --ask=4"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=pkg1")
 self.addrule("PKG_EXIST=pkg2")
 self.addrule("FILE_TYPE=lib|dir")

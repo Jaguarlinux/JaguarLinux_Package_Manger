@@ -8,4 +8,4 @@ for i in range(1000):
 
 self.args = "-Ss"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")

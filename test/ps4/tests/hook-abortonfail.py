@@ -19,7 +19,7 @@ self.addpkg2db("sync", sp)
 
 self.args = "-S foo"
 
-self.addrule("!PACMAN_RETCODE=0")
+self.addrule("!PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=foo")
 self.addrule("FILE_EXIST=hook-output")
-self.addrule("PACMAN_OUTPUT=failed to run transaction hooks")
+self.addrule("PS4_OUTPUT=failed to run transaction hooks")

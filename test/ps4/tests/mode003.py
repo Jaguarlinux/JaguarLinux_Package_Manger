@@ -12,9 +12,9 @@ self.addpkg(p)
 
 self.args = "-U %s" % p.filename()
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!FILE_PACSAVE=etc/profile")
-self.addrule("FILE_PACNEW=etc/profile")
+self.addrule("FILE_PS4NEW=etc/profile")
 self.addrule("FILE_EXIST=etc/profile")
 self.addrule("FILE_MODE=etc/profile|666")
-self.addrule("FILE_MODE=etc/profile.pacnew|666")
+self.addrule("FILE_MODE=etc/profile.ps4new|666")

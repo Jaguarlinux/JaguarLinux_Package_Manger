@@ -5,5 +5,5 @@ self.addpkg2db("sync", sp)
 
 self.args = "-S %s" % sp.name
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("FILE_EXIST=etc/ld.so.cache")

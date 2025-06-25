@@ -10,5 +10,5 @@ self.option["Architecture"] = ['i586', 'i486', 'i386']
 
 self.args = "-U %s" % p.filename()
 
-self.addrule("PACMAN_RETCODE=1")
+self.addrule("PS4_RETCODE=1")
 self.addrule("!PKG_EXIST=dummy")

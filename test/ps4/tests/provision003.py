@@ -15,7 +15,7 @@ self.addpkg2db("local", lp)
 
 self.args = "-S pkg-env"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=pkg1")
 self.addrule("PKG_EXIST=pkg2")
 self.addrule("PKG_VERSION=pkg2|1.0-2")

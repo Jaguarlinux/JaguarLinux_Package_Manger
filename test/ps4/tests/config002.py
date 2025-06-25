@@ -9,4 +9,4 @@ self.db['sync'].option['Include'] = ['/dev/null']
 
 self.args = "-Si %s" % sp.name
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")

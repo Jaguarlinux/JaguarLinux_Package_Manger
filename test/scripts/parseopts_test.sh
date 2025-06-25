@@ -49,10 +49,10 @@ tap_parse '-s -r --' 3 -sr
 tap_parse '--' 1 -s -p
 
 # short opt with an opt arg
-tap_parse '-p PKGBUILD -L --' 4 -p PKGBUILD -L
+tap_parse '-p PS4PKGBUILD -L --' 4 -p PS4PKGBUILD -L
 
 # short opt with an opt arg, no space
-tap_parse '-p PKGBUILD --' 3 -pPKGBUILD
+tap_parse '-p PS4PKGBUILD --' 3 -pPS4PKGBUILD
 
 # valid shortopts as a long opt
 tap_parse '--' 1 --sir

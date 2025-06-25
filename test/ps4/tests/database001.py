@@ -6,6 +6,6 @@ self.addpkg2db("local", lp)
 
 self.args = "-D pkg --asdeps"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_EXIST=pkg")
 self.addrule("PKG_REASON=pkg|1")

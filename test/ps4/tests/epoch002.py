@@ -8,5 +8,5 @@ self.addpkg2db("sync", sp)
 
 self.args = "-Su --ignore %s" % lp.name
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_VERSION=dummy|1.0-1")

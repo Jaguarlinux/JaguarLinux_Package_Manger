@@ -13,7 +13,7 @@ self.addpkg2db("sync", p2)
 
 self.args = "-S pkg1"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_EXIST=pkg1")
 self.addrule("PKG_VERSION=pkg1|2.0-1")
 self.addrule("FILE_TYPE=test|link")

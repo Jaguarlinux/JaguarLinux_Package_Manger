@@ -48,14 +48,14 @@ run_test() {
 
 	LC_ALL=C "$script" \
 		--template-dir "$testdir/$testcase/templates" \
-		-p "$testdir/$testcase/PKGBUILD" \
+		-p "$testdir/$testcase/PS4PKGBUILD" \
 		-o "$TMPDIR/$testcase/result" \
 		&> "$TMPDIR/$testcase/output" "${arguments[@]}"
 	exitcode=$?
 
 	tap_is_int "$exitcode" "$expected_exitcode" "$testcase exitcode"
 	tap_diff "$TMPDIR/$testcase/output" <(printf "%s" "$expected_output") "$testcase output"
-	tap_diff "$TMPDIR/$testcase/result" <(printf "%s" "$expected_result") "$testcase resulting PKGBUILD"
+	tap_diff "$TMPDIR/$testcase/result" <(printf "%s" "$expected_result") "$testcase resulting PS4PKGBUILD"
 }
 
 for dir in "$testdir/"*; do

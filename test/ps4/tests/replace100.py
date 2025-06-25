@@ -35,7 +35,7 @@ self.addpkg2db("local", lp3)
 
 self.args = "-Su"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=util-linux-ng")
 self.addrule("PKG_VERSION=util-linux|2.19-1")
 self.addrule("PKG_VERSION=kernel26|2.6.37.1-1")

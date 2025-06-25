@@ -32,7 +32,7 @@ ldep4.reason = 0
 
 self.args = "-Rs pkg1"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_EXIST=pkg2")
 self.addrule("PKG_EXIST=dep3")
 self.addrule("PKG_EXIST=dep4")

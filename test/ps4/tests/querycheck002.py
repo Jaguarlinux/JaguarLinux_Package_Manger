@@ -11,5 +11,5 @@ self.addpkg2db("local",pkg)
 
 self.args = "-Qkk"
 
-self.addrule("PACMAN_RETCODE=0")
-self.addrule("PACMAN_OUTPUT=dummy: no mtree file")
+self.addrule("PS4_RETCODE=0")
+self.addrule("PS4_OUTPUT=dummy: no mtree file")

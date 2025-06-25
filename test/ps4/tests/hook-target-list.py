@@ -35,6 +35,6 @@ self.addpkg(p2)
 
 self.args = "-U %s %s" % (p1.filename(), p2.filename())
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_EXIST=foo")
 self.addrule("FILE_CONTENTS=var/log/hook-output|file/bar\nfile/foo\nfoo\n")

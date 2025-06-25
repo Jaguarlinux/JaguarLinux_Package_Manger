@@ -22,7 +22,7 @@ self.addpkg2db("local", p2)
 
 self.args = "-R %s %s" % (p1.name, p2.name)
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=%s" % p1.name)
 self.addrule("!PKG_EXIST=%s" % p2.name)
 

@@ -8,9 +8,9 @@ self.addpkg2db("local", lpkg)
 
 self.args = "-R %s" % (lpkg.name)
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("DIR_EXIST=var/")
 self.addrule("!LINK_EXIST=srv")
 self.addrule("!FILE_EXIST=srv")
 self.addrule("!DIR_EXIST=srv")
-self.addrule("!PACMAN_OUTPUT=cannot remove")
+self.addrule("!PS4_OUTPUT=cannot remove")

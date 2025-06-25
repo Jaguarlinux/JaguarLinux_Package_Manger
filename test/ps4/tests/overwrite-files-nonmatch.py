@@ -8,6 +8,6 @@ self.filesystem = ["foobar*"]
 
 self.args = "-U --overwrite=foo %s" % p.filename()
 
-self.addrule("!PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=dummy")
 self.addrule("!FILE_MODIFIED=foobar")

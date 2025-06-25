@@ -7,4 +7,4 @@ self.addpkg2db("sync+Optional", sp)
 
 self.args = "-Ss"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")

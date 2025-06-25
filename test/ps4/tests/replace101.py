@@ -12,7 +12,7 @@ self.addpkg2db("local", lp1)
 
 self.args = "-Su"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=python-yaml")
 self.addrule("PKG_VERSION=python2-yaml|5-1")
 self.addrule("FILE_EXIST=lib/python2/file")

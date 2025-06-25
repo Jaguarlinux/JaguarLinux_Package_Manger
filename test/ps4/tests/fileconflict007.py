@@ -12,7 +12,7 @@ self.addpkg(p)
 
 self.args = "-U %s" % p.filename()
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_EXIST=pkg")
 self.addrule("PKG_VERSION=pkg|1.0-2")
 self.addrule("FILE_TYPE=dir/symdir/|dir")

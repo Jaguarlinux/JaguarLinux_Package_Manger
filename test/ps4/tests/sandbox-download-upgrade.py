@@ -12,6 +12,6 @@ url = self.add_simple_http_server({
 
 self.args = '-U {url}/{}'.format(p1.filename(), url=url)
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_EXIST=pkg1")
 self.addrule("CACHE_EXISTS=pkg1|1.0-1")

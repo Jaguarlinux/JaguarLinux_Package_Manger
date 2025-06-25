@@ -8,6 +8,6 @@ self.addpkg2db("local", p1)
 
 self.args = "-R %s" % p1.name
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("FILE_EXIST=pre_remove")
 self.addrule("FILE_EXIST=post_remove")

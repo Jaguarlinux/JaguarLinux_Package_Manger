@@ -13,6 +13,6 @@ self.addpkg2db("local", p)
 
 self.args = "-Qi %s" % p.name
 
-self.addrule("PACMAN_RETCODE=0")
-self.addrule("PACMAN_OUTPUT=^Name.*%s" % p.name)
-self.addrule("PACMAN_OUTPUT=^Description.*%s" % p.desc)
+self.addrule("PS4_RETCODE=0")
+self.addrule("PS4_OUTPUT=^Name.*%s" % p.name)
+self.addrule("PS4_OUTPUT=^Description.*%s" % p.desc)

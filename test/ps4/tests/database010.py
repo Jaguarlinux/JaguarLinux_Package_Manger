@@ -11,7 +11,7 @@ self.addpkg2db("local", p)
 
 self.args = "-R --dbonly %s" % p.name
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=dummy")
 for f in p.files:
 	self.addrule("FILE_EXIST=%s" % f)

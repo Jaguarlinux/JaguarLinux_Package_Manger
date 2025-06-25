@@ -17,7 +17,7 @@ self.addpkg(p)
 
 self.args = "-U --dbonly %s" % p.filename()
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_EXIST=dummy")
 self.addrule("PKG_VERSION=dummy|2.0-1")
 for f in lp.files:

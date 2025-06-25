@@ -25,8 +25,8 @@ for p in sp1, sp2, sp3:
 
 self.args = "-S %s %s %s --debug" % (sp1.name, sp2.name, sp3.name)
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_VERSION=pkg1|1-2")
 self.addrule("PKG_VERSION=pkg2|1-2")
 self.addrule("PKG_VERSION=pkg3|1-2")
-self.addrule("!PACMAN_OUTPUT=dependency cycle detected")
+self.addrule("!PS4_OUTPUT=dependency cycle detected")

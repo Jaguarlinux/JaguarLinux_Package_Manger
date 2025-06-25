@@ -5,5 +5,5 @@ self.addpkg2db("local", sp)
 
 self.args = "-R -- %s" % sp.name
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("!PKG_EXIST=-foo")

@@ -8,5 +8,5 @@ self.addpkg2db("local", pkg)
 
 self.args = "-Qi %s" % pkg.name
 
-self.addrule("PACMAN_RETCODE=0")
-self.addrule("PACMAN_OUTPUT=^Optional Deps.*%s$" % optstr)
+self.addrule("PS4_RETCODE=0")
+self.addrule("PS4_OUTPUT=^Optional Deps.*%s$" % optstr)

@@ -18,7 +18,7 @@ self.addpkg2db("local", lp)
 
 self.args = "-Su"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_VERSION=common-dep|1.1-1")
 self.addrule("!PKG_EXIST=notsplit")
 for i in range(3):

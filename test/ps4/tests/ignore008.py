@@ -23,7 +23,7 @@ self.option["IgnorePkg"] = ["foo*", "ba?pkg"]
 self.args = "-Su"
 
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_VERSION=foopkg|1.0-1")
 self.addrule("PKG_VERSION=barpkg|2.0-1")
 self.addrule("PKG_VERSION=bazpkg|3.0-1")

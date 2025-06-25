@@ -12,6 +12,6 @@ self.addpkg2db("sync", package2up)
 self.option["IgnorePkg"] = ["irrelevant"]
 self.args = "-Su"
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 self.addrule("PKG_VERSION=package1|1.0-1")
 self.addrule("PKG_VERSION=package2|2.0-1")

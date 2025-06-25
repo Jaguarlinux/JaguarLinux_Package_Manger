@@ -19,5 +19,5 @@ self.addpkg2db("sync", sp)
 
 self.args = "-S foo"
 
-self.addrule("PACMAN_RETCODE=0")
-self.addrule("PACMAN_OUTPUT=warning.*overwriting previous definition of Description")
+self.addrule("PS4_RETCODE=0")
+self.addrule("PS4_OUTPUT=warning.*overwriting previous definition of Description")

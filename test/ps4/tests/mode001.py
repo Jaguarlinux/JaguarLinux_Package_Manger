@@ -7,6 +7,6 @@ self.addpkg(p)
 
 self.args = "-U %s" % p.filename()
 
-self.addrule("PACMAN_RETCODE=0")
+self.addrule("PS4_RETCODE=0")
 for f in p.files:
 	self.addrule("FILE_MODE=%s|644" % f)
