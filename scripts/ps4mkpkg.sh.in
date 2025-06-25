@@ -1145,7 +1145,7 @@ pkgbase=${pkgbase:-${pkgname[0]}}
 
 # check the PS4PKGBUILD for some basic requirements
 if (( PS4MKPKG_LINT_PS4PS4PKGBUILD != 0 )); then
-	lint_PS4PKGBUILD || exit $E_PS4PS4PKGBUILD_ERROR
+	lint_ps4pkgbuild || exit $E_PS4PS4PKGBUILD_ERROR
 fi
 
 if (( !SOURCEONLY && !PRINTSRCINFO )); then
