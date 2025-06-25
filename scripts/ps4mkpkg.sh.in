@@ -75,7 +75,7 @@ SPLITPKG=0
 SOURCEONLY=0
 VERIFYSOURCE=0
 
-PS4MKPKG_LINT_PS4BUILD=${PS4MKPKG_LINT_PS4BUILD:-1}
+PS4MKPKG_LINT_PS4PKGBUILD=${PS4MKPKG_LINT_PS4PKGBUILD:-1}
 
 PS4_OPTS=()
 
@@ -1144,7 +1144,7 @@ fi
 pkgbase=${pkgbase:-${pkgname[0]}}
 
 # check the PS4PKGBUILD for some basic requirements
-if (( PS4MKPKG_LINT_PS4PS4PKGBUILD != 0 )); then
+if (( PS4MKPKG_LINT_PS4PKGBUILD != 0 )); then
 	lint_ps4pkgbuild || exit $E_PS4PS4PKGBUILD_ERROR
 fi
 
