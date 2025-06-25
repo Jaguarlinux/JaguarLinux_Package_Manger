@@ -111,7 +111,7 @@ exists_function_variable() {
 		extract_function_variable "$funcname" "$attr" 1 out
 }
 
-get_ps4pkgbuild_attribute() {
+get_pkgbuild_attribute() {
 	# $1: package name
 	# $2: attribute name
 	# $3: multivalued
@@ -133,7 +133,7 @@ get_ps4pkgbuild_attribute() {
 	fi
 }
 
-get_ps4pkgbuild_all_split_attributes() {
+get_pkgbuild_all_split_attributes() {
 	local attrname=$1 outputvar=$2 all_list list name a
 
 	if extract_global_variable "$attrname" 1 list; then

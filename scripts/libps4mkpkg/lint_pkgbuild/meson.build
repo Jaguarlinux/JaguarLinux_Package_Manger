@@ -1,4 +1,4 @@
-libps4mkpkg_module = 'lint_ps4pkgbuild'
+libps4mkpkg_module = 'lint_pkgbuild'
 
 sources = [
   'arch.sh.in',

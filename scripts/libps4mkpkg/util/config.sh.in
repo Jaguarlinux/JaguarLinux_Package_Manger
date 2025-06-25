@@ -29,7 +29,7 @@ source "$PS4MKPKG_LIBRARY/util/message.sh"
 source "$PS4MKPKG_LIBRARY/util/util.sh"
 
 # correctly source ps4mkpkg.conf, respecting user precedence and the system conf
-source_ps4mkpkg_config() {
+source_makepkg_config() {
 	# $1: override system config file
 
 	local PS4MKPKG_CONF=${1:-${PS4MKPKG_CONF:-@sysconfdir@/ps4mkpkg.conf}}
@@ -62,7 +62,7 @@ source_ps4mkpkg_config() {
 
 # load ps4mkpkg.conf by sourcing the configuration files, and preserving
 # existing environment settings
-load_ps4mkpkg_config() {
+load_makepkg_config() {
 	# $1: override system config file
 
 	local PS4MKPKG_CONF=${1:-${PS4MKPKG_CONF:-@sysconfdir@/ps4mkpkg.conf}}

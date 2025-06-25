@@ -8,7 +8,7 @@ sources = [
   'message.sh.in',
   'option.sh.in',
   'parseopts.sh.in',
-  'ps4pkgbuild.sh.in',
+  'pkgbuild.sh.in',
   'schema.sh.in',
   'source.sh.in',
   'util.sh.in',

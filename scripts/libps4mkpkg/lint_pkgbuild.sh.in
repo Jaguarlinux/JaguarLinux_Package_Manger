@@ -26,13 +26,13 @@ PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 source "$PS4MKPKG_LIBRARY/util/message.sh"
 
 
-declare -a lint_ps4pkgbuild_functions
+declare -a lint_pkgbuild_functions
 
 for lib in "$PS4MKPKG_LIBRARY/lint_ps4pkgbuild/"*.sh; do
 	source "$lib"
 done
 
-readonly -a lint_ps4pkgbuild_functions
+readonly -a lint_pkgbuild_functions
 
 
 lint_pkgbuild() {
