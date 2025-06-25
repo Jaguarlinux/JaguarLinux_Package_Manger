@@ -44,7 +44,7 @@ declare -r PS4MKPKG_version='@PACKAGE_VERSION@'
 declare -r confdir='@sysconfdir@'
 declare -r BUILDSCRIPT='@BUILDSCRIPT@'
 
-PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libPS4MKPKGdir@'}
+PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
 # Options
 ASDEPS=0
