@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-#   @PROGNAME@ - a wrapper for running the real @PROGNAME@ in the source tree
+#   pkgbase.sh - Check the 'pkgbase' variable conforms to requirements.
 #
-#   Copyright (c) 2013-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#   Copyright (c) 2014-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,6 +18,22 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-DIR="@PWD@"
+[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_PKGBASE_SH" ]] && return
+LIBMAKEPKG_LINT_PKGBUILD_PKGBASE_SH=1
 
-MAKEPKG_LIBRARY="$DIR"/libmakepkg exec bash -$- "$DIR"/.lib/@PROGNAME@ "$@"
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+
+source "$MAKEPKG_LIBRARY/lint_pkgbuild/pkgname.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+
+
+lint_pkgbuild_functions+=('lint_pkgbase')
+
+
+lint_pkgbase() {
+	if [[ -z $pkgbase ]]; then
+		return 0
+	fi
+
+	lint_one_pkgname "pkgbase" "$pkgbase"
+}

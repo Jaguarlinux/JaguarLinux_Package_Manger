@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-#   @PROGNAME@ - a wrapper for running the real @PROGNAME@ in the source tree
+#   source.sh - Check the 'source' array is not sparse.
 #
-#   Copyright (c) 2013-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#   Copyright (c) 2014-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,6 +18,22 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-DIR="@PWD@"
+[[ -n "$LIBMAKEPKG_LINT_PKGBUILD_SOURCE_SH" ]] && return
+LIBMAKEPKG_LINT_PKGBUILD_SOURCE_SH=1
 
-MAKEPKG_LIBRARY="$DIR"/libmakepkg exec bash -$- "$DIR"/.lib/@PROGNAME@ "$@"
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+
+source "$MAKEPKG_LIBRARY/util/message.sh"
+
+
+lint_pkgbuild_functions+=('lint_source')
+
+
+lint_source() {
+	local idx=("${!source[@]}")
+
+	if (( ${#source[*]} > 0 && (${idx[@]: -1} + 1) != ${#source[*]} )); then
+		error "$(gettext "Sparse arrays are not allowed for source")"
+		return 1
+	fi
+}

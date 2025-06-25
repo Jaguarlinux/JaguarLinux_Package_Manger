@@ -1,7 +1,7 @@
 wrapped_scripts = [
   'ps4mkpkg.sh.in',
-  'ps4db-upgrade.sh.in',
-  'ps4-keygen.sh.in',
+  'ps4-db-upgrade.sh.in',
+  'ps4-key.sh.in',
   'repo-add.sh.in'
 ]
 
@@ -60,11 +60,11 @@ foreach symlink : ['repo-remove', 'repo-elephant']
   script_wrappers += [[ symlink, internal_script, meson.current_build_dir() ]]
 endforeach
 
-subdir('libps4mkpkg')
+subdir('libmakepkg')
 
 configure_file(
-	configuration : { 'libps4mkpkgdir': LIBPS4MKPKGDIR, 'PACKAGE_VERSION': PACKAGE_VERSION },
-	input : 'ps4mkpkg.pc.in',
+	configuration : { 'libmakepkgdir': LIBMAKEPKGDIR, 'PACKAGE_VERSION': PACKAGE_VERSION },
+	input : 'libmakepkg.pc.in',
 	output : '@BASENAME@',
 	install_dir : join_paths(DATAROOTDIR, 'pkgconfig'))
 
@@ -76,7 +76,7 @@ custom_target(
   install : true,
   install_dir : BASHCOMPDIR)
 
-foreach symlink : ['ps4-keygen', 'ps4mkpkg']
+foreach symlink : ['ps4-key', 'makepkg']
   meson.add_install_script(MESON_MAKE_SYMLINK,
                            'ps4',
                            join_paths(BASHCOMPDIR, symlink))

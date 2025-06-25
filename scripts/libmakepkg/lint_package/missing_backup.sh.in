@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   @PROGNAME@ - a wrapper for running the real @PROGNAME@ in the source tree
+#   missing_backup.sh - Warn about missing files in the backup array
 #
 #   Copyright (c) 2013-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,6 +18,22 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-DIR="@PWD@"
+[[ -n "$LIBMAKEPKG_LINT_PACKAGE_MISSING_BACKUP_SH" ]] && return
+LIBMAKEPKG_LINT_PACKAGE_MISSING_BACKUP_SH=1
 
-MAKEPKG_LIBRARY="$DIR"/libmakepkg exec bash -$- "$DIR"/.lib/@PROGNAME@ "$@"
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+
+source "$MAKEPKG_LIBRARY/util/message.sh"
+
+
+lint_package_functions+=('warn_missing_backup')
+
+warn_missing_backup() {
+	local file
+	for file in "${backup[@]}"; do
+		if [[ ! -f $file ]]; then
+			warning "$(gettext "%s entry file not in package : %s")" "backup" "$file"
+		fi
+	done
+	return 0
+}

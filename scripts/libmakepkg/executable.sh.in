@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-#   @PROGNAME@ - a wrapper for running the real @PROGNAME@ in the source tree
+#   executable.sh - confirm presence of dependent executables
 #
-#   Copyright (c) 2013-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#   Copyright (c) 2018-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,6 +18,25 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-DIR="@PWD@"
+[[ -n "$LIBMAKEPKG_EXECUTABLE_SH" ]] && return
+LIBMAKEPKG_EXECUTABLE_SH=1
 
-MAKEPKG_LIBRARY="$DIR"/libmakepkg exec bash -$- "$DIR"/.lib/@PROGNAME@ "$@"
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+
+declare -a executable_functions
+
+for lib in "$MAKEPKG_LIBRARY/executable/"*.sh; do
+	source "$lib"
+done
+
+readonly -a executable_functions
+
+check_software() {
+	local ret=0
+
+	for func in ${executable_functions[@]}; do
+		$func || ret=1
+	done
+
+	return $ret
+}

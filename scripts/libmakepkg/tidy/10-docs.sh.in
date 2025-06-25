@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-#   @PROGNAME@ - a wrapper for running the real @PROGNAME@ in the source tree
+#   docs.sh - Remove documentation files from the package
 #
-#   Copyright (c) 2013-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#   Copyright (c) 2008-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,6 +18,20 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-DIR="@PWD@"
+[[ -n "$LIBMAKEPKG_TIDY_DOCS_SH" ]] && return
+LIBMAKEPKG_TIDY_DOCS_SH=1
 
-MAKEPKG_LIBRARY="$DIR"/libmakepkg exec bash -$- "$DIR"/.lib/@PROGNAME@ "$@"
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/option.sh"
+
+packaging_options+=('docs')
+tidy_remove+=('tidy_docs')
+
+tidy_docs() {
+	if check_option "docs" "n" && [[ -n ${DOC_DIRS[*]} ]]; then
+		msg2 "$(gettext "Removing doc files...")"
+		rm -rf -- ${DOC_DIRS[@]}
+	fi
+}

@@ -3,8 +3,7 @@
 #   repo-add - add a package to a given repo database file
 #   repo-remove - remove a package entry from a given repo database file
 #
-#   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
-#   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
+#   Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,13 +21,13 @@
 shopt -s extglob
 
 # gettext initialization
-export TEXTDOMAIN='ps4-scripts'
+export TEXTDOMAIN='pacman-scripts'
 export TEXTDOMAINDIR='@localedir@'
 
 declare -r myver='@PACKAGE_VERSION@'
 declare -r confdir='@sysconfdir@'
 
-PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
 
 QUIET=0
 ONLYADDNEW=0
@@ -47,10 +46,10 @@ INCLUDE_SIGS=0
 DB_MODIFIED=0
 WAIT_LOCK=0
 
-# Import libps4mkpkg
-source "$PS4MKPKG_LIBRARY"/util/compress.sh
-source "$PS4MKPKG_LIBRARY"/util/message.sh
-source "$PS4MKPKG_LIBRARY"/util/parseopts.sh
+# Import libmakepkg
+source "$MAKEPKG_LIBRARY"/util/compress.sh
+source "$MAKEPKG_LIBRARY"/util/message.sh
+source "$MAKEPKG_LIBRARY"/util/parseopts.sh
 
 # ensure we have a sane umask set
 umask 0022
@@ -58,7 +57,7 @@ umask 0022
 # print usage instructions
 usage() {
 	cmd=${0##*/}
-	printf -- "%s (ps4) %s\n\n" "$cmd" "$myver"
+	printf -- "%s (pacman) %s\n\n" "$cmd" "$myver"
 	if [[ $cmd == "repo-add" ]] ; then
 		printf -- "$(gettext "Usage: repo-add [options] <path-to-db> <package> ...\n")"
 		printf -- "\n"
@@ -93,7 +92,7 @@ packages to remove can be specified on the command line.\n")"
 See %s(8) for more details and descriptions of the available options.\n")" $cmd
 	printf "\n"
 	if [[ $cmd == "repo-add" ]] ; then
-		printf -- "$(gettext "Example:  repo-add /path/to/repo.db.tar.gz ps4-3.0.0-1-i686.pkg.tar.gz\n")"
+		printf -- "$(gettext "Example:  repo-add /path/to/repo.db.tar.gz pacman-3.0.0-1-i686.pkg.tar.gz\n")"
 	elif [[ $cmd == "repo-remove" ]] ; then
 		printf -- "$(gettext "Example:  repo-remove /path/to/repo.db.tar.gz kernel26\n")"
 	fi
@@ -101,8 +100,8 @@ See %s(8) for more details and descriptions of the available options.\n")" $cmd
 
 version() {
 	cmd=${0##*/}
-	printf "%s (ps4) %s\n\n" "$cmd" "$myver"
-	printf -- "Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site> \n"
+	printf "%s (pacman) %s\n\n" "$cmd" "$myver"
+	printf -- "Copyright (c) 2006-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>.\n"
 	printf '\n'
 	printf -- "$(gettext "\
 This is free software; see the source for copying conditions.\n\
@@ -205,7 +204,7 @@ verify_repo_extension() {
 	exit 1
 }
 
-# write an entry to the ps4 database
+# write an entry to the pacman database
 #   arg1 - path to package
 db_write_entry() {
 	# blank out all variables
@@ -440,7 +439,7 @@ prepare_repo_db() {
 			if ! bsdtar -tqf "$dbfile" '*/desc' >/dev/null 2>&1; then
 				# check empty case
 				if [[ -n $(bsdtar -tqf "$dbfile" '*' 2>/dev/null) ]]; then
-					error "$(gettext "Repository file '%s' is not a proper ps4 database.")" "$dbfile"
+					error "$(gettext "Repository file '%s' is not a proper pacman database.")" "$dbfile"
 					exit 1
 				fi
 			fi

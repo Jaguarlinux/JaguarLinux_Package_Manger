@@ -1,8 +1,8 @@
-ps4makpkg.pc
-ps4mkpkg
-ps4mkpkg-template
-ps4db-upgrade
-ps4-keygen
+libmakepkg.pc
+makepkg
+makepkg-template
+ps4-db-upgrade
+ps4-key
 repo-add
 repo-elephant
 repo-remove

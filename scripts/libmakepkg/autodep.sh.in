@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-#   @PROGNAME@ - a wrapper for running the real @PROGNAME@ in the source tree
+#   autodep.sh - functions for automatically adding depends/provides
 #
-#   Copyright (c) 2013-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
+#   Copyright (c) 2021-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,6 +18,21 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-DIR="@PWD@"
+[[ -n "$LIBMAKEPKG_AUTODEP_SH" ]] && return
+LIBMAKEPKG_AUTODEP_SH=1
 
-MAKEPKG_LIBRARY="$DIR"/libmakepkg exec bash -$- "$DIR"/.lib/@PROGNAME@ "$@"
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+
+declare -a autodep_functions
+
+for lib in "$MAKEPKG_LIBRARY/autodep/"*.sh; do
+	source "$lib"
+done
+
+readonly -a autodep_functions
+
+generate_autodeps() {
+	for func in ${autodep_functions[@]}; do
+		$func
+	done
+}

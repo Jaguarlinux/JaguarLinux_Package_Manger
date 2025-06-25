@@ -1,8 +1,7 @@
 #!/usr/bin/perl
-#   ps4mkpkg-template - template system for ps4mkpkg
+#   makepkg-template - template system for makepkg
 #
-#   Copyright (c) 2013-2025 OG Dev team of this fork gose to the  Pacman Development Team <pacman-dev@lists.archlinux.org>
-#   Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>
+#   Copyright (c) 2013-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -36,8 +35,8 @@ my $template_marker = qr/# template/;
 # runtime loading to avoid dependency on cpan since this is the only non-core module
 my $loaded_gettext = can_load(modules => {'Locale::gettext' => undef});
 if ($loaded_gettext) {
-	Locale::gettext::bindtextdomain("ps4-scripts", '@localedir@');
-	Locale::gettext::textdomain("ps4-scripts");
+	Locale::gettext::bindtextdomain("pacman-scripts", '@localedir@');
+	Locale::gettext::textdomain("pacman-scripts");
 }
 
 sub gettext {
@@ -172,7 +171,7 @@ sub process_file {
 
 sub usage {
 	my ($exitstatus) = @_;
-	print  gettext("ps4mkpkg-template [options]\n");
+	print  gettext("makepkg-template [options]\n");
 	print "\n";
 	print  gettext("Options:\n");
 	printf(gettext("  --input, -p <file>    Build script to read (default: %s)\n"), '@BUILDSCRIPT@');
@@ -189,9 +188,9 @@ sub usage {
 
 sub version {
 	my ($exitstatus) = @_;
-	printf "ps4mkpkg-template (ps4) %s\n", '@PACKAGE_VERSION@';
+	printf "makepkg-template (pacman) %s\n", '@PACKAGE_VERSION@';
 	print gettext(
-		'Copyright (c) 2025 ps4 Development Team <tigerclips1-ps4dev-team@ps4jaguarlinux.site>'."\n".
+		'Copyright (c) 2013-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>.'."\n".
 		'This is free software; see the source for copying conditions.'."\n".
 		'There is NO WARRANTY, to the extent permitted by law.'."\n");
 	exit($exitstatus);

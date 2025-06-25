@@ -1,6 +1,0 @@
-libps4mkpkgdir=@libps4mkpkgdir@
-
-Name: libps4mkpkg
-Description: Jaguar Linux package build utility
-URL: https://github.com/Jaguarlinux/JaguarLinux_Package_Manger
-Version: @PACKAGE_VERSION@

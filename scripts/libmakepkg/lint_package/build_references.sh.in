@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   @PROGNAME@ - a wrapper for running the real @PROGNAME@ in the source tree
+#   build_references.sh - Warn about files containing references to build directories
 #
 #   Copyright (c) 2013-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
@@ -18,6 +18,24 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-DIR="@PWD@"
+[[ -n "$LIBMAKEPKG_LINT_PACKAGE_BUILD_REFERENCES_SH" ]] && return
+LIBMAKEPKG_LINT_PACKAGE_BUILD_REFERENCES_SH=1
 
-MAKEPKG_LIBRARY="$DIR"/libmakepkg exec bash -$- "$DIR"/.lib/@PROGNAME@ "$@"
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'@libmakepkgdir@'}
+
+source "$MAKEPKG_LIBRARY/util/message.sh"
+
+lint_package_functions+=('warn_build_references')
+
+warn_build_references() {
+	local refs
+
+	for var in srcdir pkgdir; do
+		mapfile -t refs < <(find "$pkgdir" -type f -exec grep -l "${!var}" {} +)
+		if  (( ${#refs} > 0 )); then
+			warning "$(gettext 'Package contains reference to %s')" "\$$var"
+			printf '%s\n' "${refs[@]#"$pkgdir/"}" >&2
+		fi
+	done
+	return 0
+}
