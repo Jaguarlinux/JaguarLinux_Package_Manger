@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   lint_pkgbuild.sh - functions for detecting PKGBUILD errors
+#   lint_ps4pkgbuild.sh - functions for detecting PS4PKGBUILD errors
 #
 #   Copyright (c) 2015-2025 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #

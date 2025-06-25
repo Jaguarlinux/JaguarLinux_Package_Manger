@@ -18,8 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-[[ -n "$LIBPS4MKPKG_LINT_PKGBUILD_CHECKDEPENDS_SH" ]] && return
-LIBPS4MKPKG_LINT_PKGBUILD_CHECKDEPENDS_SH=1
+[[ -n "$LIBPS4MKPKG_LINT_PS4PKGBUILD_CHECKDEPENDS_SH" ]] && return
+LIBPS4MKPKG_LINT_PS4PKGBUILD_CHECKDEPENDS_SH=1
 
 PS4MKPKG_LIBRARY=${PS4MKPKG_LIBRARY:-'@libps4mkpkgdir@'}
 
@@ -29,13 +29,13 @@ source "$PS4MKPKG_LIBRARY/util/message.sh"
 source "$PS4MKPKG_LIBRARY/util/ps4pkgbuild.sh"
 
 
-lint_pkgbuild_functions+=('lint_checkdepends')
+lint_ps4pkgbuild_functions+=('lint_checkdepends')
 
 
 lint_checkdepends() {
 	local checkdepends_list checkdepend name ver ret=0
 
-	get_pkgbuild_all_split_attributes checkdepends checkdepends_list
+	get_ps4pkgbuild_all_split_attributes checkdepends checkdepends_list
 
 	# this function requires extglob - save current status to restore later
 	local shellopts=$(shopt -p extglob)
