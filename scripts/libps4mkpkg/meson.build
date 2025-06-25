@@ -5,7 +5,7 @@ libps4mkpkg_modules = [
   { 'name' : 'integrity',     'has_subdir' : true },
   { 'name' : 'lint_config',   'has_subdir' : true },
   { 'name' : 'lint_package',  'has_subdir' : true },
-  { 'name' : 'lint_ps4pkgbuild', 'has_subdir' : true },
+  { 'name' : 'lint_pkgbuild', 'has_subdir' : true },
   { 'name' : 'reproducible',  'has_subdir' : true },
   { 'name' : 'source',        'has_subdir' : true },
   { 'name' : 'srcinfo',                           },
