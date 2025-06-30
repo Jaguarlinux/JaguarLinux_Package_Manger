@@ -1,0 +1,10 @@
+prefix=@@PREFIX@@
+exec_prefix=@@EPREFIX@@
+libdir=${exec_prefix}/lib
+includedir=${exec_prefix}/include
+
+Name: PS4 API Library
+Description: The X Binary Package System library
+Version: @@VERSION@@
+Libs: -lps4 -L${libdir}
+Cflags: -I${includedir}
